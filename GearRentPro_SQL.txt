@@ -1,0 +1,18 @@
+CREATE SCHEMA `gearrentpro`;
+
+CREATE TABLE branch(
+  `branch_id` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `address` VARCHAR(50) NULL,
+  `contact` VARCHAR(15) NULL,
+  PRIMARY KEY (`branch_id`));
+
+CREATE TABLE user (
+    user_id VARCHAR(10) PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('STAFF', 'MANAGER', 'ADMIN') NOT NULL,
+    branch_id VARCHAR(10),
+    FOREIGN KEY(branch_id) REFERENCES branch(branch_id)
+);
+
