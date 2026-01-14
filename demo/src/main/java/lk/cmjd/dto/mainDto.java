@@ -1,18 +1,16 @@
-package lk.cmjd.entity;
+package lk.cmjd.dto;
 
-public class loginEntity {
+public class mainDto {
     private String userId;
     private String username;
-    private String password;
     private String Role;
 
-    public loginEntity() {
+    public mainDto() {
     }
 
-    public loginEntity(String userId, String username, String password, String role) {
+    public mainDto(String userId, String username, String role) {
         this.userId = userId;
         this.username = username;
-        this.password = password;
         Role = role;
     }
 
@@ -32,14 +30,6 @@ public class loginEntity {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return Role;
     }
@@ -50,10 +40,9 @@ public class loginEntity {
 
     @Override
     public String toString() {
-        return "signUpEntity{" +
+        return "mainDto{" +
                 "userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", Role='" + Role + '\'' +
                 '}';
     }

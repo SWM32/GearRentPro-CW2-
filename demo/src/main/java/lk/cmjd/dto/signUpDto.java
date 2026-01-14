@@ -1,15 +1,15 @@
-package lk.cmjd.entity;
+package lk.cmjd.dto;
 
-public class loginEntity {
+public class signUpDto {
     private String userId;
     private String username;
     private String password;
     private String Role;
 
-    public loginEntity() {
+    public signUpDto() {
     }
 
-    public loginEntity(String userId, String username, String password, String role) {
+    public signUpDto(String userId, String username, String password, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
