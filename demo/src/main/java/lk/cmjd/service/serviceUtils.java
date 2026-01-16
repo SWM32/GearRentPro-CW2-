@@ -12,7 +12,7 @@ import lk.cmjd.controller.mainController;
 
 public class serviceUtils {
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String userId, String username,
-            String role) {
+            String role, String branch) {
         Parent root = null;
 
         if (userId != null) {
@@ -34,7 +34,11 @@ public class serviceUtils {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 600, 400));
+        if (title.equals("Login") || title.equals("SignUp")) {
+            stage.setScene(new Scene(root, 600, 400));
+        } else {
+            stage.setScene(new Scene(root, 850, 500));
+        }
         stage.show();
     }
 }

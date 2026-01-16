@@ -33,7 +33,8 @@ public class loginDaoImpl implements loginDao {
                     rst.getString("user_id"),
                     rst.getString("username"),
                     rst.getString("password"),
-                    rst.getString("role"));
+                    rst.getString("role"),
+                    rst.getString("branch_id"));
         }
         return null;
     }

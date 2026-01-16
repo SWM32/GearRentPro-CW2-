@@ -15,7 +15,8 @@ public class loginServiceImpl implements loginService {
         loginEntity entity = dao.search(id);
 
         if (entity != null) {
-            return new loginDto(entity.getUserId(), entity.getUsername(), entity.getPassword(), entity.getRole());
+            return new loginDto(entity.getUserId(), entity.getUsername(), entity.getPassword(), entity.getRole(),
+                    entity.getBranch());
         }
 
         return null;

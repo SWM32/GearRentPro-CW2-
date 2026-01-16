@@ -20,7 +20,7 @@ public class mainController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         btnLogout.setOnAction((event) -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null,
-                null, null));
+                null, null, null));
     }
 
     public void setUserInformation(String username, String role) {

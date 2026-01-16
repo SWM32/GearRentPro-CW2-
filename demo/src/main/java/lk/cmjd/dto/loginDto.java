@@ -5,15 +5,17 @@ public class loginDto {
     private String username;
     private String password;
     private String Role;
+    private String Branch;
 
     public loginDto() {
     }
 
-    public loginDto(String userId, String username, String password, String role) {
+    public loginDto(String userId, String username, String password, String role, String branch) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         Role = role;
+        Branch = branch;
     }
 
     public String getUserId() {
@@ -48,6 +50,14 @@ public class loginDto {
         Role = role;
     }
 
+    public String getBranch() {
+        return Branch;
+    }
+
+    public void setBranch(String branch) {
+        Branch = branch;
+    }
+
     @Override
     public String toString() {
         return "signUpEntity{" +
@@ -55,6 +65,7 @@ public class loginDto {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", Role='" + Role + '\'' +
+                ", Branch='" + Branch + '\'' +
                 '}';
     }
 }

@@ -44,7 +44,7 @@ public class loginController implements Initializable {
 
                         if (BCrypt.checkpw(txtPassword.getText(), storedHash)) {
                             serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "Welcome", dto.getUserId(),
-                                    dto.getUsername(), dto.getRole());
+                                    dto.getUsername(), dto.getRole(), dto.getBranch());
                         } else {
                             System.out.println("Passwords did not match");
                             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -74,7 +74,7 @@ public class loginController implements Initializable {
 
         btnSignUp.setOnAction((event) -> {
             serviceUtils.changeScene(event, "/lk/cmjd/signUp.fxml", "SignUp", null,
-                    null, null);
+                    null, null, null);
         });
     }
 

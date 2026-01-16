@@ -67,7 +67,7 @@ public class signUpController implements Initializable {
                         alert.showAndWait();
 
                         serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "Welcome", txtUserID.getText(),
-                                txtUsername.getText(), toggleName);
+                                txtUsername.getText(), toggleName, null);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -84,7 +84,7 @@ public class signUpController implements Initializable {
         });
 
         btnLogin.setOnAction((event) -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null,
-                null, null));
+                null, null, null));
 
     }
 
