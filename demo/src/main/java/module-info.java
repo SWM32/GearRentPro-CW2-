@@ -7,6 +7,7 @@ module lk.cmjd {
 
     opens lk.cmjd to javafx.fxml;
     opens lk.cmjd.controller to javafx.fxml;
+    opens lk.cmjd.dto.tm to javafx.base;
 
     exports lk.cmjd;
 }

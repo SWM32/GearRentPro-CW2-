@@ -1,11 +1,11 @@
-CREATE SCHEMA `gearrentpro`;
+CREATE DATABASE gearrentpro;
 
 CREATE TABLE branch(
-  `branch_id` VARCHAR(10) NOT NULL,
-  `name` VARCHAR(45) NULL,
-  `address` VARCHAR(50) NULL,
-  `contact` VARCHAR(15) NULL,
-  PRIMARY KEY (`branch_id`));
+  branch_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  name VARCHAR(45) NULL,
+  address VARCHAR(50) NULL,
+  contact VARCHAR(15) NULL,
+);
 
 CREATE TABLE user (
     user_id VARCHAR(10) PRIMARY KEY,

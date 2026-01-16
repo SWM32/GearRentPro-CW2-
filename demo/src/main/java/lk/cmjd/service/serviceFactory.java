@@ -1,6 +1,7 @@
 package lk.cmjd.service;
 
 import lk.cmjd.service.custom.impl.loginServiceImpl;
+import lk.cmjd.service.custom.impl.manageBranchServiceImpl;
 import lk.cmjd.service.custom.impl.signUpServiceImpl;
 
 public class serviceFactory {
@@ -17,7 +18,7 @@ public class serviceFactory {
     }
 
     public static enum serviceType {
-        BRANCH, SIGNUP, LOGIN
+        MANAGE_BRANCH, SIGNUP, LOGIN
     }
 
     public superService getService(serviceType type) {
@@ -26,6 +27,8 @@ public class serviceFactory {
                 return new signUpServiceImpl();
             case LOGIN:
                 return new loginServiceImpl();
+            case MANAGE_BRANCH:
+                return new manageBranchServiceImpl();
             default:
                 throw new AssertionError();
         }

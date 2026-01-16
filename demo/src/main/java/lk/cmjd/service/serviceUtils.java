@@ -20,7 +20,7 @@ public class serviceUtils {
                 FXMLLoader loader = new FXMLLoader(serviceUtils.class.getResource(fxmlFile));
                 root = loader.load();
                 mainController mainController = loader.getController();
-                mainController.setUserInformation(username, role);
+                mainController.setUserInformation(username, role, branch);
             } catch (Exception e) {
                 e.printStackTrace();
             }
