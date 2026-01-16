@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -41,6 +43,9 @@ public class manageBranchController implements Initializable {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private Button btnClear;
 
     @FXML
     private TableColumn<manageBranchTM, String> colAddress;
@@ -98,6 +103,93 @@ public class manageBranchController implements Initializable {
                 alert.showAndWait();
             }
         });
+
+        btnSearch.setOnAction((event) -> {
+            try {
+                branchDto dto = service.search(txtID.getText());
+                if (dto == null) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Branch Not Found");
+                    alert.showAndWait();
+                    return;
+                }
+                txtName.setText(dto.getName());
+                txtAddress.setText(dto.getAddress());
+                txtContact.setText(dto.getContact());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        btnUpdate.setOnAction((event) -> {
+            String id = txtID.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            String contact = txtContact.getText();
+
+            branchDto dto = new branchDto(id, name, address, contact);
+
+            try {
+                boolean success = service.update(dto);
+                if (!success) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Branch Could not be updated");
+                    alert.showAndWait();
+                    return;
+                }
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("Branch Updated Successfully!");
+                alert.show();
+
+                TableSetup();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        btnDelete.setOnAction((event) -> {
+            if (txtID.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("Please Enter Branch ID");
+                alert.show();
+                return;
+            }
+            try {
+                boolean success = service.delete(txtID.getText());
+                if (success) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setContentText("Branch Deleted Successfully!");
+                    alert.show();
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Fail");
+                    alert.setContentText("Branch Could not be deleted");
+                    alert.show();
+                }
+                TableSetup();
+                clearForm();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        btnClear.setOnAction((event) -> clearForm());
+
+        tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                txtID.setText(newValue.getId());
+                txtName.setText(newValue.getName());
+                txtAddress.setText(newValue.getAddress());
+                txtContact.setText(newValue.getContact());
+            }
+        });
     }
 
     public void TableSetup() {
@@ -114,7 +206,40 @@ public class manageBranchController implements Initializable {
                 obList.add(new manageBranchTM(dto.getBranchID(), dto.getName(), dto.getAddress(), dto.getContact()));
             }
 
-            tblData.setItems(obList);
+            // Wrap the ObservableList in a FilteredList (initially display all data)
+            FilteredList<manageBranchTM> filteredData = new FilteredList<>(obList, b -> true);
+
+            txtSearchbar.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(branch -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (branch.getId().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (branch.getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (branch.getAddress().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (branch.getContact().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+
+                    return false;
+                });
+            });
+
+            // Wrap the FilteredList in a SortedList.
+            // Otherwise, sorting the table by clicking headers won't work.
+            SortedList<manageBranchTM> sortedData = new SortedList<>(filteredData);
+
+            sortedData.comparatorProperty().bind(tblData.comparatorProperty());
+
+            tblData.setItems(sortedData);
+
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");

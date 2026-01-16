@@ -48,5 +48,6 @@
       <Button fx:id="btnAdd" layoutX="455.0" layoutY="385.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="btnUpdate" layoutX="505.0" layoutY="385.0" mnemonicParsing="false" text="Update" />
       <Button fx:id="btnDelete" layoutX="571.0" layoutY="385.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="btnClear" layoutX="20.0" layoutY="385.0" mnemonicParsing="false" text="Clear" />
    </children>
 </AnchorPane>

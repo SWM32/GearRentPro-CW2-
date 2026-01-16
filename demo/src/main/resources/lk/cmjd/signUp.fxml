@@ -31,7 +31,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <TextField fx:id="txtUsername" layoutX="176.0" layoutY="124.0" />
+            <TextField fx:id="txtUsername" layoutX="176.0" layoutY="124.0" promptText="Jack" />
             <TextField fx:id="txtPassword" layoutX="176.0" layoutY="173.0" />
             <Button fx:id="btnSignUp" layoutX="140.0" layoutY="276.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="92.0" style="-fx-background-color: #FED700; -fx-cursor: hand;" text="SignUp">
                <font>
@@ -43,7 +43,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <TextField fx:id="txtUserID" layoutX="176.0" layoutY="73.0" />
+            <TextField fx:id="txtUserID" layoutX="176.0" layoutY="73.0" promptText="U001" />
             <Text layoutX="71.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already a User?">
                <font>
                   <Font size="20.0" />

@@ -33,4 +33,26 @@ public class manageBranchServiceImpl implements manageBranchService {
         return dao.save(entity);
     }
 
+    @Override
+    public branchDto search(String id) throws Exception {
+        branchEntity entity = dao.search(id);
+
+        if (entity != null) {
+            return new branchDto(entity.getBranchID(), entity.getName(), entity.getAddress(), entity.getContact());
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean delete(String id) throws Exception {
+        return dao.delete(id);
+    }
+
+    @Override
+    public boolean update(branchDto dto) throws Exception {
+        branchEntity entity = new branchEntity(dto.getBranchID(), dto.getName(), dto.getAddress(), dto.getContact());
+        return dao.update(entity);
+    }
+
 }

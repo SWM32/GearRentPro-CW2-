@@ -18,17 +18,30 @@ public class manageBranchDaoImpl implements manageBranchDao {
 
     @Override
     public boolean update(branchEntity t) throws Exception {
-        return false;
+        String sql = "UPDATE branch SET name = ?, address = ?, contact = ? WHERE branch_id = ?";
+        return CRUDUtil.executeUpdate(sql, t.getName(), t.getAddress(), t.getContact(), t.getBranchID());
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        return false;
+        String sql = "DELETE FROM branch WHERE branch_id = ?";
+        return CRUDUtil.executeUpdate(sql, id);
     }
 
     @Override
     public branchEntity search(String id) throws Exception {
+        String sql = "SELECT * FROM branch WHERE branch_id = ?";
+        ResultSet rst = CRUDUtil.executeQuery(sql, id);
+
+        if (rst.next()) {
+            return new branchEntity(rst.getString("branch_id"),
+                    rst.getString("name"),
+                    rst.getString("address"),
+                    rst.getString("contact"));
+        }
+
         return null;
+
     }
 
     @Override
