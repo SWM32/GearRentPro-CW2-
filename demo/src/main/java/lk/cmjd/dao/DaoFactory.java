@@ -1,5 +1,6 @@
 package lk.cmjd.dao;
 
+import lk.cmjd.dao.custom.impl.assignBranchDaoImpl;
 import lk.cmjd.dao.custom.impl.loginDaoImpl;
 import lk.cmjd.dao.custom.impl.manageBranchDaoImpl;
 import lk.cmjd.dao.custom.impl.signUpDaoImpl;
@@ -19,7 +20,7 @@ public class DaoFactory {
     }
 
     public static enum DaoTypes {
-        LOGIN, SIGNUP, MANAGE_BRANCH
+        LOGIN, SIGNUP, MANAGE_BRANCH, ASSIGN_BRANCH
     }
 
     public SuperDao getDao(DaoTypes type) {
@@ -30,6 +31,8 @@ public class DaoFactory {
                 return new signUpDaoImpl();
             case MANAGE_BRANCH:
                 return new manageBranchDaoImpl();
+            case ASSIGN_BRANCH:
+                return new assignBranchDaoImpl();
             default:
                 throw new AssertionError();
         }

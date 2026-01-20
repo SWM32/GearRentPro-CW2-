@@ -1,5 +1,6 @@
 package lk.cmjd.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -182,6 +184,8 @@ public class manageBranchController implements Initializable {
 
         btnClear.setOnAction((event) -> clearForm());
 
+        btnAssignBM.setOnAction((event) -> loadContent("/lk/cmjd/AssignBM.fxml"));
+
         tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 txtID.setText(newValue.getId());
@@ -246,6 +250,18 @@ public class manageBranchController implements Initializable {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    private void loadContent(String file) {
+        AnchorPane displayPane = null;
+        try {
+            displayPane = FXMLLoader.load(getClass().getResource(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ancrDisplay.getChildren().clear();
+        ancrDisplay.getChildren().add(displayPane);
     }
 
     public void clearForm() {
