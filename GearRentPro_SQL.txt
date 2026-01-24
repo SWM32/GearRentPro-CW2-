@@ -16,3 +16,14 @@ CREATE TABLE user (
     FOREIGN KEY(branch_id) REFERENCES branch(branch_id)
 );
 
+CREATE TABLE membership_tier (
+    tier_id VARCHAR(10) PRIMARY KEY,
+    tier_name ENUM('REGULAR', 'SILVER', 'GOLD') NOT NULL,
+    discount FLOAT(5)
+);
+
+INSERT INTO membership_tier
+VALUES
+('MT_1','REGULAR',0.0),
+('MT_2','SILVER',0.0),
+('MT_3','GOLD',0.0);

@@ -96,6 +96,10 @@ public class manageBranchController implements Initializable {
 
             try {
                 service.save(dto);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("New Branch Added Successfully!");
+                alert.show();
                 TableSetup();
                 clearForm();
             } catch (Exception e) {

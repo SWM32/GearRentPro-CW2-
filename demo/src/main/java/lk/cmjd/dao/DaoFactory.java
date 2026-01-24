@@ -3,6 +3,7 @@ package lk.cmjd.dao;
 import lk.cmjd.dao.custom.impl.assignBranchDaoImpl;
 import lk.cmjd.dao.custom.impl.loginDaoImpl;
 import lk.cmjd.dao.custom.impl.manageBranchDaoImpl;
+import lk.cmjd.dao.custom.impl.membershipDiscountDaoImpl;
 import lk.cmjd.dao.custom.impl.signUpDaoImpl;
 
 public class DaoFactory {
@@ -20,7 +21,7 @@ public class DaoFactory {
     }
 
     public static enum DaoTypes {
-        LOGIN, SIGNUP, MANAGE_BRANCH, ASSIGN_BRANCH
+        LOGIN, SIGNUP, MANAGE_BRANCH, ASSIGN_BRANCH, MEMBERSHIP_DISCOUNT
     }
 
     public SuperDao getDao(DaoTypes type) {
@@ -33,6 +34,8 @@ public class DaoFactory {
                 return new manageBranchDaoImpl();
             case ASSIGN_BRANCH:
                 return new assignBranchDaoImpl();
+            case MEMBERSHIP_DISCOUNT:
+                return new membershipDiscountDaoImpl();
             default:
                 throw new AssertionError();
         }

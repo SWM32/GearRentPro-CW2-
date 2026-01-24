@@ -40,10 +40,12 @@ public class mainController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        btnLogout.setOnAction((event) -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null,
+        btnLogout.setOnAction(event -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null,
                 null, null, null));
 
-        btnMngBranch.setOnAction((event) -> loadContent("/lk/cmjd/ManageBranch.fxml"));
+        btnMngBranch.setOnAction(event -> loadContent("/lk/cmjd/ManageBranch.fxml"));
+
+        btnMngMembership.setOnAction(event -> loadContent("/lk/cmjd/AssignMembershipDiscount.fxml"));
     }
 
     private void loadContent(String file) {

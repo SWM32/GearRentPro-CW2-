@@ -106,6 +106,10 @@ public class assignBMController implements Initializable {
                 if (isManager) {
                     try {
                         service.assign(txtUserID.getText(), txtBranchID.getText());
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Success!");
+                        alert.setContentText("Successfully Assigned!");
+                        alert.show();
                         TableSetup();
                         clearForm();
                     } catch (Exception e) {
@@ -142,6 +146,10 @@ public class assignBMController implements Initializable {
                 if (isManager) {
                     try {
                         service.assign(txtUserID.getText(), null);
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Success!");
+                        alert.setContentText("Successfully Unassigned!");
+                        alert.show();
                         TableSetup();
                         clearForm();
                     } catch (Exception e) {
