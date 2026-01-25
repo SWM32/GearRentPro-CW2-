@@ -27,3 +27,20 @@ VALUES
 ('MT_1','REGULAR',0.0),
 ('MT_2','SILVER',0.0),
 ('MT_3','GOLD',0.0);
+
+CREATE TABLE equipment_category(
+  category_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  name VARCHAR(20),
+  description VARCHAR(50) NULL,
+  base_price_factor float(5) NULL,
+  weekend_multiplier float(5) NULL,
+  long_rental_discount_rate float(5) NULL,
+  default_late_fee_per_day float(10) NULL
+);
+
+
+
+
+
+
+
