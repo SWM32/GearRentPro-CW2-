@@ -280,7 +280,7 @@ public class manageEquipmentController implements Initializable {
 
                 @Override
                 public String toString(branchDto branch) {
-                    return branch == null ? "" : branch.getName();
+                    return branch == null ? "" : branch.getBranchID() + "(" + branch.getName() + ")";
                 }
 
             });
@@ -308,7 +308,7 @@ public class manageEquipmentController implements Initializable {
 
                 @Override
                 public String toString(itemCategoryDto category) {
-                    return category == null ? "" : category.getName();
+                    return category == null ? "" : category.getCategoryID() + "(" + category.getName() + ")";
                 }
 
             });

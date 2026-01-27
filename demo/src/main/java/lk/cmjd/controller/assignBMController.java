@@ -15,15 +15,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 import lk.cmjd.dto.assignBranchDto;
+import lk.cmjd.dto.branchDto;
 import lk.cmjd.dto.tm.assignBranchTM;
 import lk.cmjd.service.serviceFactory;
 import lk.cmjd.service.custom.assignBranchService;
+import lk.cmjd.service.custom.manageBranchService;
 import lk.cmjd.service.serviceFactory.serviceType;
 
 public class assignBMController implements Initializable {
@@ -33,9 +37,6 @@ public class assignBMController implements Initializable {
 
     @FXML
     private Button btnAssign;
-
-    @FXML
-    private Button btnClear;
 
     @FXML
     private Button btnManageBranch;
@@ -59,111 +60,75 @@ public class assignBMController implements Initializable {
     private TableView<assignBranchTM> tblData;
 
     @FXML
-    private TextField txtBranchID;
+    private ComboBox<branchDto> cbxBranch;
+
+    @FXML
+    private ComboBox<assignBranchTM> cbxManager;
 
     @FXML
     private TextField txtSearchbar;
 
-    @FXML
-    private TextField txtUserID;
-
-    private assignBranchService service = (assignBranchService) serviceFactory.getInstance()
+    private assignBranchService assignService = (assignBranchService) serviceFactory.getInstance()
             .getService(serviceType.ASSIGN_BRANCH);
+
+    private manageBranchService branchService = (manageBranchService) serviceFactory.getInstance()
+            .getService(serviceType.MANAGE_BRANCH);
 
     ObservableList<assignBranchTM> obList;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         TableSetup();
+        loadManagers();
+        loadBranches();
 
         btnManageBranch.setOnAction(event -> loadContent("/lk/cmjd/ManageBranch.fxml"));
 
         tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                txtUserID.setText(newValue.getUserID());
-                txtBranchID.setText(newValue.getBranchID());
+                for (assignBranchTM manager : cbxManager.getItems()) {
+                    if (manager.getUserID().equals(newValue.getUserID())) {
+                        cbxManager.setValue(manager);
+                    }
+                }
+
+                for (branchDto branch : cbxBranch.getItems()) {
+                    if (branch.getBranchID().equals(newValue.getBranchID())) {
+                        cbxBranch.setValue(branch);
+                    }
+                }
             }
         });
 
-        btnClear.setOnAction(event -> clearForm());
-
         btnAssign.setOnAction(event -> {
-            if (txtUserID.getText().isEmpty() || txtBranchID.getText().isEmpty()) {
+            try {
+                assignService.assign(cbxManager.getValue().getUserID(), cbxBranch.getValue().getBranchID());
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("Successfully Assigned!");
+                alert.show();
+                TableSetup();
+            } catch (Exception e) {
                 Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Please Enter Both UserID and BranchID");
+                alert.setTitle("Fail");
+                alert.setContentText(e.getMessage());
                 alert.showAndWait();
-            } else {
-                boolean isManager = false;
-
-                for (assignBranchTM item : obList) {
-                    if (item.getUserID().toLowerCase().equals(txtUserID.getText().toLowerCase())) {
-                        isManager = true;
-                        break;
-                    }
-                }
-
-                if (isManager) {
-                    try {
-                        service.assign(txtUserID.getText(), txtBranchID.getText());
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("Success!");
-                        alert.setContentText("Successfully Assigned!");
-                        alert.show();
-                        TableSetup();
-                        clearForm();
-                    } catch (Exception e) {
-                        Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Fail");
-                        alert.setContentText(e.getMessage());
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setContentText("Invalid UserID");
-                    alert.showAndWait();
-                }
             }
         });
 
         btnUnassign.setOnAction(event -> {
-            if (txtUserID.getText().isEmpty()) {
+            try {
+                assignService.assign(cbxManager.getValue().getUserID(), null);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("Successfully Unassigned!");
+                alert.show();
+                TableSetup();
+            } catch (Exception e) {
                 Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Please Enter UserID");
+                alert.setTitle("Fail");
+                alert.setContentText(e.getMessage());
                 alert.showAndWait();
-            } else {
-                boolean isManager = false;
-
-                for (assignBranchTM item : obList) {
-                    if (item.getUserID().toLowerCase().equals(txtUserID.getText().toLowerCase())) {
-                        isManager = true;
-                        break;
-                    }
-                }
-
-                if (isManager) {
-                    try {
-                        service.assign(txtUserID.getText(), null);
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("Success!");
-                        alert.setContentText("Successfully Unassigned!");
-                        alert.show();
-                        TableSetup();
-                        clearForm();
-                    } catch (Exception e) {
-                        Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Fail");
-                        alert.setContentText(e.getMessage());
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setContentText("Invalid UserID");
-                    alert.showAndWait();
-                }
             }
         });
     }
@@ -175,7 +140,7 @@ public class assignBMController implements Initializable {
         colBranchID.setCellValueFactory(new PropertyValueFactory<>("branchID"));
 
         try {
-            ArrayList<assignBranchDto> dtos = service.getAll();
+            ArrayList<assignBranchDto> dtos = assignService.getAll();
 
             obList = FXCollections.observableArrayList();
 
@@ -224,6 +189,53 @@ public class assignBMController implements Initializable {
         }
     }
 
+    private void loadManagers() {
+        cbxManager.setItems(obList);
+        cbxManager.setVisibleRowCount(4);
+
+        cbxManager.setConverter(new StringConverter<assignBranchTM>() {
+
+            @Override
+            public assignBranchTM fromString(String arg0) {
+                return null;
+            }
+
+            @Override
+            public String toString(assignBranchTM manager) {
+                return manager == null ? "" : manager.getUserID() + "(" + manager.getName() + ")";
+            }
+
+        });
+    }
+
+    private void loadBranches() {
+        try {
+            ArrayList<branchDto> branches = branchService.getAll();
+            ObservableList<branchDto> obBranchList = FXCollections.observableArrayList(branches);
+
+            cbxBranch.setItems(obBranchList);
+            cbxBranch.setVisibleRowCount(4);
+
+            cbxBranch.setConverter(new StringConverter<branchDto>() {
+
+                @Override
+                public branchDto fromString(String string) {
+                    return null;
+                }
+
+                @Override
+                public String toString(branchDto branch) {
+                    return branch == null ? "" : branch.getBranchID() + "(" + branch.getName() + ")";
+                }
+
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void loadContent(String file) {
         AnchorPane displayPane = null;
         try {
@@ -234,11 +246,6 @@ public class assignBMController implements Initializable {
 
         ancrDisplay.getChildren().clear();
         ancrDisplay.getChildren().add(displayPane);
-    }
-
-    private void clearForm() {
-        txtUserID.setText("");
-        txtBranchID.setText("");
     }
 
 }
