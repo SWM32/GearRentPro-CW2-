@@ -33,6 +33,9 @@ public class mainController implements Initializable {
     private Button btnMngCategory;
 
     @FXML
+    private Button btnMngEquipment;
+
+    @FXML
     private Button btnLogout;
 
     @FXML
@@ -51,6 +54,8 @@ public class mainController implements Initializable {
         btnMngMembership.setOnAction(event -> loadContent("/lk/cmjd/AssignMembershipDiscount.fxml"));
 
         btnMngCategory.setOnAction(event -> loadContent("/lk/cmjd/ManageCategory.fxml"));
+
+        btnMngEquipment.setOnAction(event -> loadContent("/lk/cmjd/ManageEquipment.fxml"));
     }
 
     private void loadContent(String file) {

@@ -18,7 +18,7 @@
             <TableColumn fx:id="colBPF" prefWidth="70.4000244140625" text="BPF(%)" />
             <TableColumn fx:id="colWM" prefWidth="78.39996337890625" text="WM(%)" />
             <TableColumn fx:id="colLRDR" prefWidth="72.0" text="LRDR(%)" />
-            <TableColumn fx:id="colLFPD" prefWidth="77.60000000000002" text="LFPD(Rs.)" />
+            <TableColumn fx:id="colLFPD" prefWidth="77.60000000000002" text="LFPD(Rs)" />
          </columns>
       </TableView>
       <TextField fx:id="txtID" layoutX="40.0" layoutY="288.0" promptText="IC001" />

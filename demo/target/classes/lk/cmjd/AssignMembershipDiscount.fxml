@@ -10,25 +10,25 @@
 
 <AnchorPane fx:id="ancrDisplay" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.assignMembershipDiscountController">
    <children>
-      <TableView fx:id="tblData" layoutX="19.0" layoutY="134.0" prefHeight="142.0" prefWidth="278.0">
+      <TableView fx:id="tblData" layoutX="130.0" layoutY="122.0" prefHeight="142.0" prefWidth="416.0">
          <columns>
-            <TableColumn fx:id="colTierName" prefWidth="144.00002670288086" text="Membership Tier" />
-            <TableColumn fx:id="colDiscount" prefWidth="135.19996643066406" text="Discount(%)" />
+            <TableColumn fx:id="colTierName" prefWidth="213.60011291503906" text="Membership Tier" />
+            <TableColumn fx:id="colDiscount" prefWidth="201.59991455078125" text="Discount(%)" />
          </columns>
       </TableView>
-      <TextField fx:id="txtTierName" layoutX="450.0" layoutY="176.0" promptText="Silver" />
-      <TextField fx:id="txtDiscount" layoutX="399.0" layoutY="237.0" prefHeight="26.0" prefWidth="136.0" promptText="15" />
-      <Label layoutX="326.0" layoutY="179.0" text="Membership Tier">
+      <TextField fx:id="txtTierName" layoutX="190.0" layoutY="328.0" promptText="Silver" />
+      <TextField fx:id="txtDiscount" layoutX="454.0" layoutY="328.0" prefHeight="26.0" prefWidth="136.0" promptText="15" />
+      <Label layoutX="66.0" layoutY="331.0" text="Membership Tier">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="328.0" layoutY="240.0" text="Discount">
+      <Label layoutX="383.0" layoutY="331.0" text="Discount">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnAssign" layoutX="557.0" layoutY="385.0" mnemonicParsing="false" text="Assign" />
-      <Button fx:id="btnClear" layoutX="20.0" layoutY="385.0" mnemonicParsing="false" text="Clear" />
+      <Button fx:id="btnAssign" layoutX="538.0" layoutY="385.0" mnemonicParsing="false" text="Assign" />
+      <Button fx:id="btnClear" layoutX="66.0" layoutY="385.0" mnemonicParsing="false" text="Clear" />
    </children>
 </AnchorPane>

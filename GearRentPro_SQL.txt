@@ -38,9 +38,16 @@ CREATE TABLE equipment_category(
   default_late_fee_per_day float(10) NULL
 );
 
-
-
-
-
-
-
+CREATE TABLE equipment(
+  equipment_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  branch_id VARCHAR(10),
+  category_id VARCHAR(10),
+  brand VARCHAR(10),
+  model VARCHAR(50),
+  purchase_year int(5),
+  base_daily_price float(10),
+  security_deposit_amount float(10),
+  status ENUM( 'AVAILABLE', 'RESERVED', 'RENTED', 'MAINTENANCE'),
+  FOREIGN KEY(branch_id) REFERENCES branch(branch_id),
+  FOREIGN KEY(category_id) REFERENCES equipment_category(category_id)
+);
