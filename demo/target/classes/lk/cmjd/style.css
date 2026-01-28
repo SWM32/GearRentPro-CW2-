@@ -1,0 +1,52 @@
+.label {
+    -fx-text-fill: #2D3436;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.menu-btn {
+    -fx-background-color: #2D3436;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 15 8 15;
+    -fx-alignment: CENTER;
+}
+
+.menu-btn:hover {
+    -fx-background-color: #353b48;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 0, 2);
+}
+
+.menu-btn:pressed {
+    -fx-background-color: #1e272e;
+    -fx-effect: none;
+}
+
+.active {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #2D3436;
+    -fx-border-color: #2D3436;
+    -fx-border-width: 0 0 0 4;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.menu-btn.active:hover {
+    -fx-background-color: #FFFFFF; 
+    -fx-text-fill: #2D3436;
+}
+
+.logout-btn {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 15 8 15;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #e74c3c;
+}

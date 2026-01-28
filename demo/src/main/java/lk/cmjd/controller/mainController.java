@@ -2,6 +2,9 @@ package lk.cmjd.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -47,20 +50,54 @@ public class mainController implements Initializable {
     private String role;
     private String branch;
 
+    private List<Button> menuButtons;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        btnLogout.setOnAction(event -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null,
-                null, null, null));
+        menuButtons = new ArrayList<>(Arrays.asList(btnHome, btnMngBranch, btnMngMembership, btnMngCategory,
+                btnMngEquipment, btnMngCustomer));
 
-        btnMngBranch.setOnAction(event -> loadContent("/lk/cmjd/ManageBranch.fxml"));
+        btnLogout.setOnAction(
+                event -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null, null, null, null));
 
-        btnMngMembership.setOnAction(event -> loadContent("/lk/cmjd/AssignMembershipDiscount.fxml"));
+        btnHome.setOnAction(event -> {
+            updateActiveState(btnHome);
+            ancrDisplay.getChildren().clear();
+        });
 
-        btnMngCategory.setOnAction(event -> loadContent("/lk/cmjd/ManageCategory.fxml"));
+        btnMngBranch.setOnAction(event -> {
+            updateActiveState(btnMngBranch);
+            loadContent("/lk/cmjd/ManageBranch.fxml");
+        });
 
-        btnMngEquipment.setOnAction(event -> loadContent("/lk/cmjd/ManageEquipment.fxml"));
+        btnMngMembership.setOnAction(event -> {
+            updateActiveState(btnMngMembership);
+            loadContent("/lk/cmjd/AssignMembershipDiscount.fxml");
+        });
 
-        btnMngCustomer.setOnAction(event -> loadContent("/lk/cmjd/ManageCustomer.fxml"));
+        btnMngCategory.setOnAction(event -> {
+            updateActiveState(btnMngCategory);
+            loadContent("/lk/cmjd/ManageCategory.fxml");
+        });
+
+        btnMngEquipment.setOnAction(event -> {
+            updateActiveState(btnMngEquipment);
+            loadContent("/lk/cmjd/ManageEquipment.fxml");
+        });
+
+        btnMngCustomer.setOnAction(event -> {
+            updateActiveState(btnMngCustomer);
+            loadContent("/lk/cmjd/ManageCustomer.fxml");
+        });
+
+        updateActiveState(btnHome);
+    }
+
+    private void updateActiveState(Button activeBtn) {
+        for (Button btn : menuButtons) {
+            btn.getStyleClass().remove("active");
+        }
+        activeBtn.getStyleClass().add("active");
     }
 
     private void loadContent(String file) {
@@ -89,13 +126,49 @@ public class mainController implements Initializable {
         btnMngMembership.setVisible(false);
         btnMngMembership.setManaged(false);
 
+        btnMngCategory.setVisible(false);
+        btnMngCategory.setManaged(false);
+
+        btnMngCustomer.setVisible(false);
+        btnMngCustomer.setManaged(false);
+
+        btnMngEquipment.setVisible(false);
+        btnMngEquipment.setManaged(false);
+
         if (role.equalsIgnoreCase("Admin")) {
             btnMngBranch.setVisible(true);
             btnMngBranch.setManaged(true);
 
             btnMngMembership.setVisible(true);
             btnMngMembership.setManaged(true);
+
+            btnMngCategory.setVisible(true);
+            btnMngCategory.setManaged(true);
+
+            btnMngCustomer.setVisible(true);
+            btnMngCustomer.setManaged(true);
+
+            btnMngEquipment.setVisible(true);
+            btnMngEquipment.setManaged(true);
+        }
+
+        if (role.equalsIgnoreCase("Manager")) {
+            btnMngCustomer.setVisible(true);
+            btnMngCustomer.setManaged(true);
+
+            btnMngEquipment.setVisible(true);
+            btnMngEquipment.setManaged(true);
+
+            btnMngCategory.setVisible(true);
+            btnMngCategory.setManaged(true);
+        }
+
+        if (role.equalsIgnoreCase("Staff")) {
+            btnMngCustomer.setVisible(true);
+            btnMngCustomer.setManaged(true);
+
+            btnMngEquipment.setVisible(true);
+            btnMngEquipment.setManaged(true);
         }
     }
-
 }
