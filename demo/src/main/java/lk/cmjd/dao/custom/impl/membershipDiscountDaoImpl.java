@@ -37,7 +37,8 @@ public class membershipDiscountDaoImpl implements membershipDiscountDao {
         ResultSet rst = CRUDUtil.executeQuery(sql);
 
         while (rst.next()) {
-            entities.add(new membershipDiscountEntity(rst.getString("tier_name"), rst.getFloat("discount")));
+            entities.add(new membershipDiscountEntity(rst.getString("tier_id"), rst.getString("tier_name"),
+                    rst.getFloat("discount")));
         }
 
         return entities;

@@ -20,7 +20,7 @@ public class membershipDiscountServiceImpl implements membershipDiscountService 
         ArrayList<membershipDiscountEntity> entities = dao.getAll();
 
         for (membershipDiscountEntity e : entities) {
-            dtos.add(new membershipDiscountDto(e.getTiername(), e.getDiscount()));
+            dtos.add(new membershipDiscountDto(e.getTierId(), e.getTiername(), e.getDiscount()));
         }
 
         return dtos;

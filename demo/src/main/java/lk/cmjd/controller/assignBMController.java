@@ -108,6 +108,7 @@ public class assignBMController implements Initializable {
                 alert.setContentText("Successfully Assigned!");
                 alert.show();
                 TableSetup();
+                clearForm();
             } catch (Exception e) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Fail");
@@ -124,6 +125,7 @@ public class assignBMController implements Initializable {
                 alert.setContentText("Successfully Unassigned!");
                 alert.show();
                 TableSetup();
+                clearForm();
             } catch (Exception e) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Fail");
@@ -246,6 +248,11 @@ public class assignBMController implements Initializable {
 
         ancrDisplay.getChildren().clear();
         ancrDisplay.getChildren().add(displayPane);
+    }
+
+    private void clearForm() {
+        cbxBranch.setValue(null);
+        cbxManager.setValue(null);
     }
 
 }

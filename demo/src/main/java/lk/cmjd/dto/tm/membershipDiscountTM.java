@@ -1,15 +1,25 @@
 package lk.cmjd.dto.tm;
 
 public class membershipDiscountTM {
+    private String tierId;
     private String tiername;
     private float discount;
 
     public membershipDiscountTM() {
     }
 
-    public membershipDiscountTM(String tiername, float discount) {
+    public membershipDiscountTM(String tierId, String tiername, float discount) {
+        this.tierId = tierId;
         this.tiername = tiername;
         this.discount = discount;
+    }
+
+    public String getTierId() {
+        return tierId;
+    }
+
+    public void setTierId(String tierId) {
+        this.tierId = tierId;
     }
 
     public String getTiername() {
@@ -31,7 +41,8 @@ public class membershipDiscountTM {
     @Override
     public String toString() {
         return "membershipDiscountDto{" +
-                "tiername='" + tiername + '\'' +
+                "tierId='" + tierId + '\'' +
+                ", tiername='" + tiername + '\'' +
                 ", discount=" + discount +
                 '}';
     }
