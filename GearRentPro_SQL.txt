@@ -39,7 +39,7 @@ CREATE TABLE equipment_category(
 );
 
 CREATE TABLE equipment(
-  equipment_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
   branch_id VARCHAR(10),
   category_id VARCHAR(10),
   brand VARCHAR(10),
@@ -51,3 +51,18 @@ CREATE TABLE equipment(
   FOREIGN KEY(branch_id) REFERENCES branch(branch_id),
   FOREIGN KEY(category_id) REFERENCES equipment_category(category_id)
 );
+
+CREATE TABLE customer(
+  customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  name VARCHAR(30),
+  nic_passport VARCHAR(30),
+  contact VARCHAR(15),
+  email VARCHAR(30),
+  address VARCHAR(30),
+  membership_tier_id VARCHAR(10),
+  FOREIGN KEY(membership_tier_id) REFERENCES membership_tier(tier_id)
+);
+
+
+
+

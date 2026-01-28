@@ -28,6 +28,7 @@
             <Button fx:id="btnLogout" layoutX="73.0" layoutY="432.0" mnemonicParsing="false" style="-fx-background-color: #ab6144; -fx-cursor: hand;" text="Logout" textFill="WHITE" />
             <Button fx:id="btnMngCategory" layoutX="31.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" style="-fx-cursor: hand;" text="Manage Category" />
             <Button fx:id="btnMngEquipment" layoutX="31.0" layoutY="309.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" style="-fx-cursor: hand;" text="Manage Equipment" />
+            <Button fx:id="btnMngCustomer" layoutX="31.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" style="-fx-cursor: hand;" text="Manage Customer" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ancrDisplay" prefHeight="500.0" prefWidth="655.0" />
