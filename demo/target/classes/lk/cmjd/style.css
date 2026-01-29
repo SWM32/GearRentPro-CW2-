@@ -41,10 +41,10 @@
     -fx-background-color: #c0392b;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 12px;
+    -fx-font-size: 10px;
     -fx-background-radius: 5;
     -fx-cursor: hand;
-    -fx-padding: 8 15 8 15;
+    -fx-padding: 6 13 6 13;
 }
 
 .logout-btn:hover {

@@ -29,6 +29,7 @@ import lk.cmjd.service.custom.itemCategoryService;
 import lk.cmjd.service.custom.manageBranchService;
 import lk.cmjd.service.custom.manageEquipmentService;
 import lk.cmjd.service.serviceFactory.serviceType;
+import lk.cmjd.util.sessionUtil;
 
 public class manageEquipmentController implements Initializable {
 
@@ -260,11 +261,21 @@ public class manageEquipmentController implements Initializable {
     }
 
     private void loadBranches() {
+        String sessionBranch = sessionUtil.getSession().getBranch();
         try {
             ArrayList<branchDto> branches = branchService.getAll();
             ObservableList<branchDto> obList = FXCollections.observableArrayList(branches);
 
-            cbxBranch.setItems(obList);
+            if (sessionBranch == null) {
+                cbxBranch.setItems(obList);
+            } else {
+                for (branchDto branch : branches) {
+                    if (branch.getBranchID().equals(sessionBranch)) {
+                        cbxBranch.setValue(branch);
+                        break;
+                    }
+                }
+            }
             cbxBranch.setVisibleRowCount(4);
 
             // setup toString method to display names in the comboBox
@@ -333,10 +344,24 @@ public class manageEquipmentController implements Initializable {
         try {
             ArrayList<equipmentDto> dtos = equipmentService.getAll();
 
+            String sessionBranch = sessionUtil.getSession().getBranch();
+
             ObservableList<manageEquipmentTM> obList = FXCollections.observableArrayList();
-            for (equipmentDto dto : dtos) {
-                obList.add(new manageEquipmentTM(dto.getEquipment_id(), dto.getBranch_id(), dto.getCategory_id(),
-                        dto.getBrand(), dto.getModel(), dto.getYear(), dto.getBdp(), dto.getSda(), dto.getStatus()));
+            if (sessionBranch != null) {
+                for (equipmentDto dto : dtos) {
+                    if (dto.getBranch_id().equals(sessionBranch)) {
+                        obList.add(
+                                new manageEquipmentTM(dto.getEquipment_id(), dto.getBranch_id(), dto.getCategory_id(),
+                                        dto.getBrand(), dto.getModel(), dto.getYear(), dto.getBdp(), dto.getSda(),
+                                        dto.getStatus()));
+                    }
+                }
+            } else {
+                for (equipmentDto dto : dtos) {
+                    obList.add(new manageEquipmentTM(dto.getEquipment_id(), dto.getBranch_id(), dto.getCategory_id(),
+                            dto.getBrand(), dto.getModel(), dto.getYear(), dto.getBdp(), dto.getSda(),
+                            dto.getStatus()));
+                }
             }
 
             // Wrap the ObservableList in a FilteredList (initially display all data)
@@ -398,7 +423,9 @@ public class manageEquipmentController implements Initializable {
         txtYear.setText("");
         txtBDP.setText("");
         txtSDA.setText("");
-        cbxBranch.setValue(null);
+        if (sessionUtil.getSession().getBranch() == null) {
+            cbxBranch.setValue(null);
+        }
         cbxCategory.setValue(null);
         cbxStatus.setValue(null);
     }

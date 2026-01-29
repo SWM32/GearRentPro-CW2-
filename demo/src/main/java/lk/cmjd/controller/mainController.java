@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lk.cmjd.service.serviceUtils;
+import lk.cmjd.util.sessionUtil;
 
 public class mainController implements Initializable {
 
@@ -58,7 +58,10 @@ public class mainController implements Initializable {
                 btnMngEquipment, btnMngCustomer));
 
         btnLogout.setOnAction(
-                event -> serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null, null, null, null));
+                event -> {
+                    serviceUtils.changeScene(event, "/lk/cmjd/login.fxml", "Login", null, null, null, null);
+                    sessionUtil.getSession().clearSession();
+                });
 
         btnHome.setOnAction(event -> {
             updateActiveState(btnHome);
@@ -100,7 +103,7 @@ public class mainController implements Initializable {
         activeBtn.getStyleClass().add("active");
     }
 
-    private void loadContent(String file) {
+    private void loadContent(String file, String... branch) {
         AnchorPane displayPane = null;
         try {
             displayPane = FXMLLoader.load(getClass().getResource(file));
@@ -116,6 +119,8 @@ public class mainController implements Initializable {
         this.role = role;
         this.branch = branch;
         txtUser.setText(username + " (" + role + ")");
+        sessionUtil.getSession().setBranch(branch);
+        sessionUtil.getSession().setRole(role);
         setUpMenu();
     }
 
@@ -156,8 +161,10 @@ public class mainController implements Initializable {
             btnMngCustomer.setVisible(true);
             btnMngCustomer.setManaged(true);
 
-            btnMngEquipment.setVisible(true);
-            btnMngEquipment.setManaged(true);
+            if (branch != null) {
+                btnMngEquipment.setVisible(true);
+                btnMngEquipment.setManaged(true);
+            }
 
             btnMngCategory.setVisible(true);
             btnMngCategory.setManaged(true);
@@ -166,9 +173,6 @@ public class mainController implements Initializable {
         if (role.equalsIgnoreCase("Staff")) {
             btnMngCustomer.setVisible(true);
             btnMngCustomer.setManaged(true);
-
-            btnMngEquipment.setVisible(true);
-            btnMngEquipment.setManaged(true);
         }
     }
 }
