@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.manageRentalController">
+   <children>
+      <ScrollPane prefHeight="500.0" prefWidth="655.0">
+         <content>
+            <AnchorPane prefHeight="650.0" prefWidth="655.0">
+               <children>
+                  <TextField fx:id="txtRenSearchbar" layoutX="18.0" layoutY="20.0" promptText="Search Rental" />
+                  <ScrollPane layoutX="18.0" layoutY="56.0" prefHeight="125.0" prefWidth="620.0">
+                     <content>
+                        <TableView fx:id="tblRentalData" prefHeight="125.0" prefWidth="1550.0">
+                           <columns>
+                              <TableColumn fx:id="colRenREID" prefWidth="85.0" text="REID" />
+                              <TableColumn fx:id="colRenCusID" prefWidth="85.0" text="CusID" />
+                              <TableColumn fx:id="colRenEID" prefWidth="85.0" text="EID" />
+                              <TableColumn fx:id="colRenBID" prefWidth="100.0" text="BID" />
+                              <TableColumn fx:id="colRenStart" prefWidth="120.0" text="Start" />
+                              <TableColumn fx:id="colRenDue" prefWidth="120.0" text="Due" />
+                              <TableColumn fx:id="colRenARD" minWidth="5.60009765625" prefWidth="120.0" text="Actual Return Date" />
+                              <TableColumn fx:id="colRenTR" prefWidth="120.0" text="Total Rent (Rs)" />
+                              <TableColumn fx:id="colRenSDH" prefWidth="120.0" text="SDH (Rs)" />
+                              <TableColumn fx:id="colRenMD" prefWidth="120.0" text="Mem Disc (Rs)" />
+                              <TableColumn fx:id="colRenLRD" prefWidth="120.0" text="LongRenDisc (Rs)" />
+                              <TableColumn fx:id="colRenFP" prefWidth="120.0" text="Final Pay (Rs)" />
+                              <TableColumn fx:id="colRenPS" prefWidth="120.0" text="Payment Status" />
+                              <TableColumn fx:id="colRenRS" prefWidth="120.0" text="Rental Status" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane layoutX="18.0" layoutY="246.0" prefHeight="125.0" prefWidth="620.0">
+                     <content>
+                        <TableView fx:id="tblEquipmentData" prefHeight="125.0" prefWidth="825.0">
+                           <columns>
+                              <TableColumn fx:id="colEqEID" prefWidth="85.0" text="EID" />
+                              <TableColumn fx:id="colEqBID" prefWidth="85.0" text="BID" />
+                              <TableColumn fx:id="colEqCID" prefWidth="85.0" text="CID" />
+                              <TableColumn fx:id="colEqBrand" prefWidth="100.0" text="Brand" />
+                              <TableColumn fx:id="colEqModel" prefWidth="120.0" text="Model" />
+                              <TableColumn fx:id="colEqYear" prefWidth="70.0" text="Year" />
+                              <TableColumn fx:id="colEqBDP" prefWidth="85.0" text="BDP(Rs)" />
+                              <TableColumn fx:id="colEqSDA" minWidth="0.0" prefWidth="85.0" text="SDA(Rs)" />
+                              <TableColumn fx:id="colEqStatus" minWidth="5.60009765625" prefWidth="100.0" text="Status" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+                  <TextField fx:id="txtEqSearchbar" layoutX="18.0" layoutY="210.0" promptText="Search Equipment" />
+                  <TextField fx:id="txtREID" layoutX="60.0" layoutY="399.0" prefHeight="26.0" prefWidth="94.0" promptText="RE001" />
+                  <Label layoutX="18.0" layoutY="402.0" text="REID">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnSearch" layoutX="168.0" layoutY="399.0" mnemonicParsing="false" text="Search" />
+                  <Label layoutX="16.0" layoutY="449.0" text="CusID">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="455.0" layoutY="399.0" text="EID">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbxEquipment" layoutX="487.0" layoutY="396.0" prefWidth="150.0" promptText="Equipment" />
+                  <Label layoutX="247.0" layoutY="399.0" text="BID">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbxBranch" layoutX="279.0" layoutY="396.0" prefWidth="150.0" promptText="Branch" />
+                  <DatePicker fx:id="dateStart" layoutX="278.0" layoutY="446.0" prefHeight="26.0" prefWidth="151.0" />
+                  <Label layoutX="231.0" layoutY="448.0" text="Start">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dateEnd" layoutX="487.0" layoutY="446.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Label layoutX="454.0" layoutY="449.0" text="End">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="16.0" layoutY="497.0" text="Payment Status">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbxPayStatus" layoutX="128.0" layoutY="494.0" prefHeight="26.0" prefWidth="150.0" promptText="Payment Status" />
+                  <Button fx:id="btnAdd" layoutX="464.0" layoutY="598.0" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="btnUpdate" layoutX="511.0" layoutY="598.0" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="btnCancel" layoutX="573.0" layoutY="598.0" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="btnClear" layoutX="14.0" layoutY="598.0" mnemonicParsing="false" text="Clear" />
+                  <TextField fx:id="txtCusID" layoutX="66.0" layoutY="446.0" prefHeight="26.0" prefWidth="94.0" promptText="CU001" />
+                  <Label layoutX="387.0" layoutY="497.0" text="Rental Status">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbxRentStatus" layoutX="485.0" layoutY="494.0" prefHeight="26.0" prefWidth="150.0" promptText="Rental Status" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -45,6 +45,9 @@ public class mainController implements Initializable {
     private Button btnMngReservation;
 
     @FXML
+    private Button btnMngRental;
+
+    @FXML
     private Button btnLogout;
 
     @FXML
@@ -58,7 +61,7 @@ public class mainController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         menuButtons = new ArrayList<>(Arrays.asList(btnHome, btnMngBranch, btnMngMembership, btnMngCategory,
-                btnMngEquipment, btnMngCustomer, btnMngReservation));
+                btnMngEquipment, btnMngCustomer, btnMngReservation, btnMngRental));
 
         btnLogout.setOnAction(
                 event -> {
@@ -99,6 +102,11 @@ public class mainController implements Initializable {
         btnMngReservation.setOnAction(event -> {
             updateActiveState(btnMngReservation);
             loadContent("/lk/cmjd/ManageReservation.fxml");
+        });
+
+        btnMngRental.setOnAction(event -> {
+            updateActiveState(btnMngRental);
+            loadContent("/lk/cmjd/ManageRental.fxml");
         });
 
         updateActiveState(btnHome);
@@ -151,6 +159,9 @@ public class mainController implements Initializable {
         btnMngReservation.setVisible(false);
         btnMngReservation.setManaged(false);
 
+        btnMngRental.setVisible(false);
+        btnMngRental.setManaged(false);
+
         if (role.equalsIgnoreCase("Admin")) {
             btnMngBranch.setVisible(true);
             btnMngBranch.setManaged(true);
@@ -178,6 +189,9 @@ public class mainController implements Initializable {
 
                 btnMngReservation.setVisible(true);
                 btnMngReservation.setManaged(true);
+
+                btnMngRental.setVisible(true);
+                btnMngRental.setManaged(true);
             }
 
             btnMngCategory.setVisible(true);
@@ -190,6 +204,9 @@ public class mainController implements Initializable {
 
             btnMngReservation.setVisible(true);
             btnMngReservation.setManaged(true);
+
+            btnMngRental.setVisible(true);
+            btnMngRental.setManaged(true);
         }
     }
 }

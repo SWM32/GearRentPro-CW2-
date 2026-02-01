@@ -37,6 +37,7 @@
                   <Button fx:id="btnMngEquipment" mnemonicParsing="false" prefWidth="160.0" styleClass="menu-btn" text="Manage Equipment" />
                   <Button fx:id="btnMngCustomer" mnemonicParsing="false" prefWidth="160.0" styleClass="menu-btn" text="Manage Customer" />
                   <Button fx:id="btnMngReservation" mnemonicParsing="false" prefWidth="160.0" styleClass="menu-btn" text="Manage Reservation" />
+                  <Button fx:id="btnMngRental" mnemonicParsing="false" prefWidth="160.0" styleClass="menu-btn" text="Manage Rental" />
                </children>
                <padding>
                   <Insets left="20.0" top="15.0" />
