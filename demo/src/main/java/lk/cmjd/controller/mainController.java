@@ -42,6 +42,9 @@ public class mainController implements Initializable {
     private Button btnMngCustomer;
 
     @FXML
+    private Button btnMngReservation;
+
+    @FXML
     private Button btnLogout;
 
     @FXML
@@ -55,7 +58,7 @@ public class mainController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         menuButtons = new ArrayList<>(Arrays.asList(btnHome, btnMngBranch, btnMngMembership, btnMngCategory,
-                btnMngEquipment, btnMngCustomer));
+                btnMngEquipment, btnMngCustomer, btnMngReservation));
 
         btnLogout.setOnAction(
                 event -> {
@@ -91,6 +94,11 @@ public class mainController implements Initializable {
         btnMngCustomer.setOnAction(event -> {
             updateActiveState(btnMngCustomer);
             loadContent("/lk/cmjd/ManageCustomer.fxml");
+        });
+
+        btnMngReservation.setOnAction(event -> {
+            updateActiveState(btnMngReservation);
+            loadContent("/lk/cmjd/ManageReservation.fxml");
         });
 
         updateActiveState(btnHome);
@@ -140,6 +148,9 @@ public class mainController implements Initializable {
         btnMngEquipment.setVisible(false);
         btnMngEquipment.setManaged(false);
 
+        btnMngReservation.setVisible(false);
+        btnMngReservation.setManaged(false);
+
         if (role.equalsIgnoreCase("Admin")) {
             btnMngBranch.setVisible(true);
             btnMngBranch.setManaged(true);
@@ -164,6 +175,9 @@ public class mainController implements Initializable {
             if (branch != null) {
                 btnMngEquipment.setVisible(true);
                 btnMngEquipment.setManaged(true);
+
+                btnMngReservation.setVisible(true);
+                btnMngReservation.setManaged(true);
             }
 
             btnMngCategory.setVisible(true);
@@ -173,6 +187,9 @@ public class mainController implements Initializable {
         if (role.equalsIgnoreCase("Staff")) {
             btnMngCustomer.setVisible(true);
             btnMngCustomer.setManaged(true);
+
+            btnMngReservation.setVisible(true);
+            btnMngReservation.setManaged(true);
         }
     }
 }

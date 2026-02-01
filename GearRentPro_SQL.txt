@@ -39,7 +39,7 @@ CREATE TABLE equipment_category(
 );
 
 CREATE TABLE equipment(
-  customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  equipment_id VARCHAR(10) NOT NULL PRIMARY KEY,
   branch_id VARCHAR(10),
   category_id VARCHAR(10),
   brand VARCHAR(10),
@@ -61,6 +61,20 @@ CREATE TABLE customer(
   address VARCHAR(30),
   membership_tier_id VARCHAR(10),
   FOREIGN KEY(membership_tier_id) REFERENCES membership_tier(tier_id)
+);
+
+CREATE TABLE reservation(
+  reservation_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  customer_id VARCHAR(10),
+  equipment_id VARCHAR(10),
+  branch_id VARCHAR(10),
+  reservation_date date,
+  start_date date,
+  end_date date,
+  status ENUM( 'PENDING', 'COMPLETED', 'CANCELLED'),
+  FOREIGN KEY(branch_id) REFERENCES branch(branch_id),
+  FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+  FOREIGN KEY(equipment_id) REFERENCES equipment(equipment_id)
 );
 
 

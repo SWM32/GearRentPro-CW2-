@@ -66,7 +66,7 @@ public class signUpController implements Initializable {
                         alert.setContentText("User Registered Successflully!");
                         alert.showAndWait();
 
-                        serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "Welcome", txtUserID.getText(),
+                        serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "GearRentPro", txtUserID.getText(),
                                 txtUsername.getText(), toggleName, null);
                     }
                 } catch (Exception e) {

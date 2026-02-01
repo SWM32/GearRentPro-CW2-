@@ -258,6 +258,52 @@ public class manageEquipmentController implements Initializable {
                 cbxStatus.setValue(newValue.getStatus());
             }
         });
+
+        btnSearch.setOnAction(event -> {
+            if (txtEID.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("Please Enter Equipment ID");
+                alert.show();
+                return;
+            }
+            try {
+                equipmentDto dto = equipmentService.search(txtEID.getText());
+                if (dto == null) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Not Found");
+                    alert.setContentText("Equipment Not Found");
+                    alert.show();
+                    return;
+                }
+
+                txtBrand.setText(dto.getBrand());
+                txtModel.setText(dto.getModel());
+                txtYear.setText(String.valueOf(dto.getYear()));
+                txtBDP.setText(String.valueOf(dto.getBdp()));
+                txtSDA.setText(String.valueOf(dto.getSda()));
+                cbxStatus.setValue(dto.getStatus());
+
+                // Set ComboBox values based on the search result
+                for (branchDto branch : cbxBranch.getItems()) {
+                    if (branch.getBranchID().equals(dto.getBranch_id())) {
+                        cbxBranch.setValue(branch);
+                        break;
+                    }
+                }
+                for (itemCategoryDto category : cbxCategory.getItems()) {
+                    if (category.getCategoryID().equals(dto.getCategory_id())) {
+                        cbxCategory.setValue(category);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        });
     }
 
     private void loadBranches() {

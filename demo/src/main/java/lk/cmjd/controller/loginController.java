@@ -43,7 +43,7 @@ public class loginController implements Initializable {
                         String storedHash = dto.getPassword();
 
                         if (BCrypt.checkpw(txtPassword.getText(), storedHash)) {
-                            serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "Welcome", dto.getUserId(),
+                            serviceUtils.changeScene(event, "/lk/cmjd/main.fxml", "GearRentPro", dto.getUserId(),
                                     dto.getUsername(), dto.getRole(), dto.getBranch());
                         } else {
                             System.out.println("Passwords did not match");

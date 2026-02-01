@@ -6,6 +6,7 @@ import lk.cmjd.service.custom.impl.loginServiceImpl;
 import lk.cmjd.service.custom.impl.manageBranchServiceImpl;
 import lk.cmjd.service.custom.impl.manageCustomerServiceImpl;
 import lk.cmjd.service.custom.impl.manageEquipmentServiceImpl;
+import lk.cmjd.service.custom.impl.manageReservationServiceImpl;
 import lk.cmjd.service.custom.impl.membershipDiscountServiceImpl;
 import lk.cmjd.service.custom.impl.signUpServiceImpl;
 
@@ -24,7 +25,7 @@ public class serviceFactory {
 
     public static enum serviceType {
         MANAGE_BRANCH, SIGNUP, LOGIN, ASSIGN_BRANCH, MEMBERSHIP_DISCOUNT, ITEM_CATEGORY, MANAGE_EQUIPMENT,
-        MANAGE_CUSTOMER
+        MANAGE_CUSTOMER, MANAGE_RESERVATION
     }
 
     public superService getService(serviceType type) {
@@ -45,6 +46,8 @@ public class serviceFactory {
                 return new manageEquipmentServiceImpl();
             case MANAGE_CUSTOMER:
                 return new manageCustomerServiceImpl();
+            case MANAGE_RESERVATION:
+                return new manageReservationServiceImpl();
             default:
                 throw new AssertionError();
         }
