@@ -20,7 +20,7 @@ public class manageCustomerServiceImpl implements manageCustomerService {
 
         for (customerEntity entity : entities) {
             dtos.add(new customerDto(entity.getCusId(), entity.getName(), entity.getNic_pass(), entity.getContact(),
-                    entity.getEmail(), entity.getAddress(), entity.getMid()));
+                    entity.getEmail(), entity.getAddress(), entity.getMid(), entity.getDep()));
         }
 
         return dtos;
@@ -29,7 +29,7 @@ public class manageCustomerServiceImpl implements manageCustomerService {
     @Override
     public boolean save(customerDto dto) throws Exception {
         customerEntity entity = new customerEntity(dto.getCusId(), dto.getName(), dto.getNic_pass(), dto.getContact(),
-                dto.getEmail(), dto.getAddress(), dto.getMid());
+                dto.getEmail(), dto.getAddress(), dto.getMid(), dto.getDep());
 
         return dao.save(entity);
     }
@@ -40,7 +40,7 @@ public class manageCustomerServiceImpl implements manageCustomerService {
 
         if (entity != null) {
             return new customerDto(entity.getCusId(), entity.getName(), entity.getNic_pass(), entity.getContact(),
-                    entity.getEmail(), entity.getAddress(), entity.getMid());
+                    entity.getEmail(), entity.getAddress(), entity.getMid(), entity.getDep());
         }
 
         return null;
@@ -54,7 +54,7 @@ public class manageCustomerServiceImpl implements manageCustomerService {
     @Override
     public boolean update(customerDto dto) throws Exception {
         customerEntity entity = new customerEntity(dto.getCusId(), dto.getName(), dto.getNic_pass(), dto.getContact(),
-                dto.getEmail(), dto.getAddress(), dto.getMid());
+                dto.getEmail(), dto.getAddress(), dto.getMid(), dto.getDep());
         return dao.update(entity);
     }
 

@@ -11,16 +11,16 @@ public class manageCustomerDaoImpl implements manageCustomerDao {
 
     @Override
     public boolean save(customerEntity t) throws Exception {
-        String sql = "INSERT INTO customer VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO customer VALUES(?,?,?,?,?,?,?,?)";
         return CRUDUtil.executeUpdate(sql, t.getCusId(), t.getName(), t.getNic_pass(), t.getContact(),
-                t.getEmail(), t.getAddress(), t.getMid());
+                t.getEmail(), t.getAddress(), t.getMid(), t.getDep());
     }
 
     @Override
     public boolean update(customerEntity t) throws Exception {
-        String sql = "UPDATE customer SET name = ?, nic_passport = ?, contact = ?, email = ?, address = ?, membership_tier_id = ? WHERE customer_id = ?";
+        String sql = "UPDATE customer SET name = ?, nic_passport = ?, contact = ?, email = ?, address = ?, membership_tier_id = ?, deposit = ? WHERE customer_id = ?";
         return CRUDUtil.executeUpdate(sql, t.getName(), t.getNic_pass(), t.getContact(), t.getEmail(),
-                t.getAddress(), t.getMid(), t.getCusId());
+                t.getAddress(), t.getMid(), t.getDep(), t.getCusId());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class manageCustomerDaoImpl implements manageCustomerDao {
         if (rst.next()) {
             return new customerEntity(rst.getString("customer_id"), rst.getString("name"),
                     rst.getString("nic_passport"), rst.getString("contact"), rst.getString("email"),
-                    rst.getString("address"), rst.getString("membership_tier_id"));
+                    rst.getString("address"), rst.getString("membership_tier_id"), rst.getFloat("deposit"));
         }
 
         return null;
@@ -53,7 +53,7 @@ public class manageCustomerDaoImpl implements manageCustomerDao {
         while (rst.next()) {
             customerEntities.add(new customerEntity(rst.getString("customer_id"), rst.getString("name"),
                     rst.getString("nic_passport"), rst.getString("contact"), rst.getString("email"),
-                    rst.getString("address"), rst.getString("membership_tier_id")));
+                    rst.getString("address"), rst.getString("membership_tier_id"), rst.getFloat("deposit")));
         }
 
         return customerEntities;

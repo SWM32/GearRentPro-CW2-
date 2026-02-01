@@ -8,12 +8,13 @@ public class customerEntity {
     private String email;
     private String address;
     private String mid;
+    private float dep;
 
     public customerEntity() {
     }
 
     public customerEntity(String cusId, String name, String nic_pass, String contact, String email, String address,
-            String mid) {
+            String mid, float dep) {
         this.cusId = cusId;
         this.name = name;
         this.nic_pass = nic_pass;
@@ -21,6 +22,7 @@ public class customerEntity {
         this.email = email;
         this.address = address;
         this.mid = mid;
+        this.dep = dep;
     }
 
     public String getCusId() {
@@ -79,9 +81,17 @@ public class customerEntity {
         this.mid = mid;
     }
 
+    public float getDep() {
+        return dep;
+    }
+
+    public void setDep(float dep) {
+        this.dep = dep;
+    }
+
     @Override
     public String toString() {
         return "customerDto [cusId=" + cusId + ", name=" + name + ", nic_pass=" + nic_pass + ", contact=" + contact
-                + ", email=" + email + ", address=" + address + ", mid=" + mid + "]";
+                + ", email=" + email + ", address=" + address + ", mid=" + mid + ", dep=" + dep + "]";
     }
 }

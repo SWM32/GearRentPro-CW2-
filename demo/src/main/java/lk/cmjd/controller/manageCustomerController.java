@@ -73,6 +73,9 @@ public class manageCustomerController implements Initializable {
     private TableColumn<customerTM, String> colNicPass;
 
     @FXML
+    private TableColumn<customerTM, Float> colDep;
+
+    @FXML
     private TableView<customerTM> tblData;
 
     @FXML
@@ -126,7 +129,7 @@ public class manageCustomerController implements Initializable {
             String address = txtAddress.getText();
             String mid = cbxMembership.getValue().getTierId();
 
-            customerDto dto = new customerDto(cusId, name, nicPass, contact, email, address, mid);
+            customerDto dto = new customerDto(cusId, name, nicPass, contact, email, address, mid, 0);
 
             try {
                 customerService.save(dto);
@@ -152,8 +155,14 @@ public class manageCustomerController implements Initializable {
             String email = txtEmail.getText();
             String address = txtAddress.getText();
             String mid = cbxMembership.getValue().getTierId();
+            float dep = 0;
+            try {
+                dep = customerService.search(cusId).getDep();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            customerDto dto = new customerDto(cusId, name, nicPass, contact, email, address, mid);
+            customerDto dto = new customerDto(cusId, name, nicPass, contact, email, address, mid, dep);
 
             try {
                 boolean success = customerService.update(dto);
@@ -300,6 +309,7 @@ public class manageCustomerController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colMID.setCellValueFactory(new PropertyValueFactory<>("mid"));
+        colDep.setCellValueFactory(new PropertyValueFactory<>("dep"));
 
         try {
             ArrayList<customerDto> dtos = customerService.getAll();
@@ -307,7 +317,7 @@ public class manageCustomerController implements Initializable {
             ObservableList<customerTM> obList = FXCollections.observableArrayList();
             for (customerDto dto : dtos) {
                 obList.add(new customerTM(dto.getCusId(), dto.getName(), dto.getNic_pass(), dto.getContact(),
-                        dto.getEmail(), dto.getAddress(), dto.getMid()));
+                        dto.getEmail(), dto.getAddress(), dto.getMid(), dto.getDep()));
             }
 
             FilteredList<customerTM> filteredData = new FilteredList<>(obList, b -> true);
