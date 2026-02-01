@@ -4,14 +4,16 @@ public class membershipDiscountDto {
     private String tierId;
     private String tiername;
     private float discount;
+    private float maxDep;
 
     public membershipDiscountDto() {
     }
 
-    public membershipDiscountDto(String tierId, String tiername, float discount) {
+    public membershipDiscountDto(String tierId, String tiername, float discount, float maxDep) {
         this.tierId = tierId;
         this.tiername = tiername;
         this.discount = discount;
+        this.maxDep = maxDep;
     }
 
     public String getTierId() {
@@ -38,12 +40,21 @@ public class membershipDiscountDto {
         this.discount = discount;
     }
 
+    public float getMaxDep() {
+        return maxDep;
+    }
+
+    public void setMaxDep(float maxDep) {
+        this.maxDep = maxDep;
+    }
+
     @Override
     public String toString() {
         return "membershipDiscountDto{" +
                 "tierId='" + tierId + '\'' +
                 ", tiername='" + tiername + '\'' +
-                ", discount=" + discount +
+                ", discount=" + discount + '\'' +
+                ", maxDep=" + maxDep +
                 '}';
     }
 }

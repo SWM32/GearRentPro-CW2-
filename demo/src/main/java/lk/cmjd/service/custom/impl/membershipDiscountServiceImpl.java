@@ -20,15 +20,15 @@ public class membershipDiscountServiceImpl implements membershipDiscountService 
         ArrayList<membershipDiscountEntity> entities = dao.getAll();
 
         for (membershipDiscountEntity e : entities) {
-            dtos.add(new membershipDiscountDto(e.getTierId(), e.getTiername(), e.getDiscount()));
+            dtos.add(new membershipDiscountDto(e.getTierId(), e.getTiername(), e.getDiscount(), e.getMaxDep()));
         }
 
         return dtos;
     }
 
     @Override
-    public boolean assign(String name, float discount) throws Exception {
-        return dao.assign(name, discount);
+    public boolean assign(String name, float discount, float maxDep) throws Exception {
+        return dao.assign(name, discount, maxDep);
     }
 
 }

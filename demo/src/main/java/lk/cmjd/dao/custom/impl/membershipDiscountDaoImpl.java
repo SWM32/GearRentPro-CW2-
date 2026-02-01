@@ -38,16 +38,16 @@ public class membershipDiscountDaoImpl implements membershipDiscountDao {
 
         while (rst.next()) {
             entities.add(new membershipDiscountEntity(rst.getString("tier_id"), rst.getString("tier_name"),
-                    rst.getFloat("discount")));
+                    rst.getFloat("discount"), rst.getFloat("max_deposit")));
         }
 
         return entities;
     }
 
     @Override
-    public boolean assign(String name, Float discount) throws Exception {
-        String sql = "UPDATE membership_tier SET discount = ? WHERE tier_name = ?";
-        return CRUDUtil.executeUpdate(sql, discount, name);
+    public boolean assign(String name, Float discount, Float maxDep) throws Exception {
+        String sql = "UPDATE membership_tier SET discount = ?, max_deposit = ? WHERE tier_name = ?";
+        return CRUDUtil.executeUpdate(sql, discount, maxDep, name);
     }
 
 }

@@ -42,10 +42,16 @@ public class assignMembershipDiscountController implements Initializable {
     private TableColumn<membershipDiscountTM, String> colTierName;
 
     @FXML
+    private TableColumn<membershipDiscountDto, Float> colMaxDep;
+
+    @FXML
     private TableView<membershipDiscountTM> tblData;
 
     @FXML
     private TextField txtDiscount;
+
+    @FXML
+    private TextField txtMaxDep;
 
     @FXML
     private ComboBox<membershipDiscountDto> cbxMembership;
@@ -61,6 +67,7 @@ public class assignMembershipDiscountController implements Initializable {
         tblData.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 txtDiscount.setText(String.valueOf(newValue.getDiscount()));
+                txtMaxDep.setText(String.valueOf(newValue.getMaxDep()));
 
                 for (membershipDiscountDto membership : cbxMembership.getItems()) {
                     if (membership.getTierId().equals(newValue.getTierId())) {
@@ -81,8 +88,9 @@ public class assignMembershipDiscountController implements Initializable {
             } else {
                 try {
                     float dis = Float.parseFloat(txtDiscount.getText());
+                    float maxDep = Float.parseFloat(txtMaxDep.getText());
                     if (dis < 100 && dis > 0) {
-                        service.assign(cbxMembership.getValue().getTiername(), dis);
+                        service.assign(cbxMembership.getValue().getTiername(), dis, maxDep);
                         Alert alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Success!");
                         alert.setContentText("Successfully Assigned!");
@@ -109,6 +117,7 @@ public class assignMembershipDiscountController implements Initializable {
     public void TableSetup() {
         colTierName.setCellValueFactory(new PropertyValueFactory<>("tiername"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        colMaxDep.setCellValueFactory(new PropertyValueFactory<>("maxDep"));
 
         try {
             ArrayList<membershipDiscountDto> dtos = service.getAll();
@@ -116,7 +125,7 @@ public class assignMembershipDiscountController implements Initializable {
             ObservableList<membershipDiscountTM> oblist = FXCollections.observableArrayList();
 
             for (membershipDiscountDto t : dtos) {
-                oblist.add(new membershipDiscountTM(t.getTierId(), t.getTiername(), t.getDiscount()));
+                oblist.add(new membershipDiscountTM(t.getTierId(), t.getTiername(), t.getDiscount(), t.getMaxDep()));
             }
 
             tblData.setItems(oblist);
@@ -159,6 +168,7 @@ public class assignMembershipDiscountController implements Initializable {
     private void clearForm() {
         cbxMembership.setValue(null);
         txtDiscount.setText("");
+        txtMaxDep.setText("");
     }
 
 }

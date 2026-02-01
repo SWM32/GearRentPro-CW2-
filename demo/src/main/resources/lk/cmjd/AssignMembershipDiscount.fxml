@@ -11,10 +11,11 @@
 
 <AnchorPane fx:id="ancrDisplay" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.assignMembershipDiscountController">
    <children>
-      <TableView fx:id="tblData" layoutX="130.0" layoutY="122.0" prefHeight="142.0" prefWidth="416.0">
+      <TableView fx:id="tblData" layoutX="54.0" layoutY="122.0" prefHeight="142.0" prefWidth="543.0">
          <columns>
-            <TableColumn fx:id="colTierName" prefWidth="213.60011291503906" text="Membership Tier" />
-            <TableColumn fx:id="colDiscount" prefWidth="201.59991455078125" text="Discount(%)" />
+            <TableColumn fx:id="colTierName" prefWidth="183.19997787475586" text="Membership Tier" />
+            <TableColumn fx:id="colDiscount" prefWidth="184.00001525878906" text="Discount(%)" />
+            <TableColumn fx:id="colMaxDep" prefWidth="176.00006103515625" text="Max Deposit (Rs)" />
          </columns>
       </TableView>
       <TextField fx:id="txtDiscount" layoutX="454.0" layoutY="328.0" prefHeight="26.0" prefWidth="136.0" promptText="15" />
@@ -28,8 +29,14 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="btnAssign" layoutX="538.0" layoutY="385.0" mnemonicParsing="false" text="Assign" />
-      <Button fx:id="btnClear" layoutX="66.0" layoutY="385.0" mnemonicParsing="false" text="Clear" />
+      <Button fx:id="btnAssign" layoutX="536.0" layoutY="437.0" mnemonicParsing="false" text="Assign" />
+      <Button fx:id="btnClear" layoutX="64.0" layoutY="437.0" mnemonicParsing="false" text="Clear" />
       <ComboBox fx:id="cbxMembership" layoutX="187.0" layoutY="328.0" prefWidth="150.0" promptText="Membership" />
+      <TextField fx:id="txtMaxDep" layoutX="158.0" layoutY="376.0" prefHeight="26.0" prefWidth="136.0" promptText="250000" />
+      <Label layoutX="64.0" layoutY="380.0" text="Max Deposit">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
