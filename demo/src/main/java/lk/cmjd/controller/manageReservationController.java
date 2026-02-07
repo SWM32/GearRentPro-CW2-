@@ -218,6 +218,10 @@ public class manageReservationController implements Initializable {
             if (newValue != null) {
                 startDateValidation();
             }
+
+            if (dateEnd.getValue() != null) {
+                endDateValidation();
+            }
         });
 
         dateEnd.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -227,6 +231,7 @@ public class manageReservationController implements Initializable {
                     alert.setTitle("Error");
                     alert.setContentText("Please Select Start Date");
                     alert.show();
+                    dateEnd.setValue(null);
                 } else {
                     endDateValidation();
                 }
@@ -306,7 +311,7 @@ public class manageReservationController implements Initializable {
                                 connection.commit();
                                 Alert alert = new Alert(AlertType.INFORMATION);
                                 alert.setTitle("Success!");
-                                alert.setContentText("New Equipment Added Successfully!");
+                                alert.setContentText("New Reservation Added Successfully!");
                                 alert.show();
                                 clearForm();
                                 ResTableSetup();
@@ -352,22 +357,66 @@ public class manageReservationController implements Initializable {
                 alert.show();
                 return;
             }
+            String eid = cbxEquipment.getValue().getEquipment_id();
+            String rsid = txtRSID.getText();
             try {
-                boolean success = reservationService.delete(txtRSID.getText());
-                if (success) {
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Success");
-                    alert.setContentText("Reservation Cancelled Successfully!");
-                    alert.show();
-                } else {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Fail");
-                    alert.setContentText("Reservation Could not be cancelled");
-                    alert.show();
+                Connection connection = DBConnection.getInstance().getConnection();
+
+                try {
+                    connection.setAutoCommit(false);
+                    boolean success = reservationService.delete(txtRSID.getText());
+                    if (success) {
+                        boolean isEquipmentStatusUpdated = true;
+
+                        equipmentDto edto = equipmentService.search(eid);
+
+                        if (edto != null) {
+                            equipmentDto udto = new equipmentDto(edto.getEquipment_id(), edto.getBranch_id(),
+                                    edto.getCategory_id(), edto.getBrand(), edto.getModel(), edto.getYear(),
+                                    edto.getBdp(), edto.getSda(), "AVAILABLE");
+                            for (manageReservationTM res : tblReservationData.getItems()) {
+                                if (!res.getReservation_id().equals(rsid) && res.getEquipment_id().equals(eid)) {
+                                    udto = new equipmentDto(edto.getEquipment_id(), edto.getBranch_id(),
+                                            edto.getCategory_id(), edto.getBrand(), edto.getModel(), edto.getYear(),
+                                            edto.getBdp(), edto.getSda(), "RESERVED");
+                                    break;
+                                }
+                            }
+                            isEquipmentStatusUpdated = equipmentService.update(udto);
+                        } else {
+                            isEquipmentStatusUpdated = false;
+                        }
+
+                        if (isEquipmentStatusUpdated) {
+                            connection.commit();
+                            Alert alert = new Alert(AlertType.INFORMATION);
+                            alert.setTitle("Success");
+                            alert.setContentText("Reservation Cancelled Successfully!");
+                            alert.show();
+                        } else {
+                            connection.rollback();
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Fail");
+                            alert.setContentText("Failed to Update Equipment Status");
+                            alert.show();
+                        }
+
+                    } else {
+                        connection.rollback();
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Fail");
+                        alert.setContentText("Reservation Could not be cancelled");
+                        alert.show();
+                    }
+                    clearForm();
+                    ResTableSetup();
+                    EqTableSetup();
+                } catch (Exception e) {
+                    connection.rollback();
+                    e.printStackTrace();
+                } finally {
+                    connection.setAutoCommit(true);
                 }
-                clearForm();
-                ResTableSetup();
-                EqTableSetup();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -404,7 +453,10 @@ public class manageReservationController implements Initializable {
                     ResTableSetup();
                     EqTableSetup();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Fail");
+                    alert.setContentText(e.getMessage());
+                    alert.show();
                 }
             }
         });
@@ -600,6 +652,10 @@ public class manageReservationController implements Initializable {
         LocalDate today = LocalDate.now();
         LocalDate new_start = dateStart.getValue();
 
+        if (new_start == null) {
+            return;
+        }
+
         if (!new_start.isAfter(today)) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -613,6 +669,10 @@ public class manageReservationController implements Initializable {
     public void endDateValidation() {
         LocalDate new_start = dateStart.getValue();
         LocalDate new_end = dateEnd.getValue();
+
+        if (new_start == null || new_end == null) {
+            return;
+        }
 
         if (new_end.compareTo(new_start) >= 0) {
             long daysBetween = ChronoUnit.DAYS.between(new_start, new_end);
@@ -638,6 +698,10 @@ public class manageReservationController implements Initializable {
         LocalDate new_start = dateStart.getValue();
         LocalDate new_end = dateEnd.getValue();
         String res_eq_id = cbxEquipment.getValue().getEquipment_id();
+
+        if (new_start == null || res_eq_id == null) {
+            return false;
+        }
 
         for (manageReservationTM res : tblReservationData.getItems()) {
             LocalDate exist_start = res.getStart_date();
@@ -665,6 +729,11 @@ public class manageReservationController implements Initializable {
                         return false;
                     }
                 } else if (new_start.compareTo(exist_start) == 0) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText(
+                            "Reservation Overlap with Existing reservation (" + res.getReservation_id() + ")");
+                    alert.show();
                     return false;
                 }
             }
