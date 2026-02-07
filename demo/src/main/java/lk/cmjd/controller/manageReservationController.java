@@ -1,6 +1,7 @@
 package lk.cmjd.controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
+import lk.cmjd.db.DBConnection;
 import lk.cmjd.dto.branchDto;
 import lk.cmjd.dto.equipmentDto;
 import lk.cmjd.dto.reservationDto;
@@ -280,20 +282,65 @@ public class manageReservationController implements Initializable {
 
             if (dateOverlapValidation()) {
                 try {
-                    reservationService.save(dto);
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Success!");
-                    alert.setContentText("New Equipment Added Successfully!");
-                    alert.show();
-                    clearForm();
-                    ResTableSetup();
-                    EqTableSetup();
+                    Connection connection = DBConnection.getInstance().getConnection();
+
+                    try {
+                        connection.setAutoCommit(false);
+
+                        if (reservationService.save(dto)) {
+
+                            boolean isEquipmentStatusUpdated = true;
+
+                            equipmentDto edto = equipmentService.search(eid);
+
+                            if (edto != null) {
+                                equipmentDto udto = new equipmentDto(edto.getEquipment_id(), edto.getBranch_id(),
+                                        edto.getCategory_id(), edto.getBrand(), edto.getModel(), edto.getYear(),
+                                        edto.getBdp(), edto.getSda(), "RESERVED");
+                                isEquipmentStatusUpdated = equipmentService.update(udto);
+                            } else {
+                                isEquipmentStatusUpdated = false;
+                            }
+
+                            if (isEquipmentStatusUpdated) {
+                                connection.commit();
+                                Alert alert = new Alert(AlertType.INFORMATION);
+                                alert.setTitle("Success!");
+                                alert.setContentText("New Equipment Added Successfully!");
+                                alert.show();
+                                clearForm();
+                                ResTableSetup();
+                                EqTableSetup();
+                            } else {
+                                connection.rollback();
+                                Alert alert = new Alert(AlertType.ERROR);
+                                alert.setTitle("Fail");
+                                alert.setContentText("Failed to Update Equipment Status");
+                                alert.show();
+                            }
+
+                        } else {
+                            connection.rollback();
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Fail");
+                            alert.setContentText("Failed to Save Reservation Details");
+                            alert.show();
+                        }
+
+                    } catch (Exception e) {
+                        connection.rollback();
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("Fail");
+                        alert.setContentText(e.getMessage());
+                        alert.show();
+                    } finally {
+                        connection.setAutoCommit(true);
+                    }
+
                 } catch (Exception e) {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Fail");
-                    alert.setContentText(e.getMessage());
-                    alert.show();
+                    e.printStackTrace();
                 }
+
             }
         });
 
