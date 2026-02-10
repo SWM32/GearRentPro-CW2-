@@ -85,6 +85,26 @@ CREATE TABLE customer_deposit(
   FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
 );
 
+CREATE TABLE rental(
+  rental_id VARCHAR(10) NOT NULL PRIMARY KEY,
+  customer_id VARCHAR(10),
+  equipment_id VARCHAR(10),
+  branch_id VARCHAR(10),
+  start_date date,
+  due_date date,
+  actual_return_date date,
+  total_rental_cost float(10),
+  security_deposit_held float(10),
+  membership_discount_amount float(10),
+  long_rental_discount_amount float(10),
+  final_payable_amount float(10),
+  payment_status ENUM( 'PAID', 'PARTIALLY_PAID', 'UNPAID'),
+  rental_status ENUM( 'ACTIVE', 'RETURNED', 'OVERDUE', 'CANCELLED'),
+  FOREIGN KEY(branch_id) REFERENCES branch(branch_id),
+  FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+  FOREIGN KEY(equipment_id) REFERENCES equipment(equipment_id)
+);
+
 
 
 

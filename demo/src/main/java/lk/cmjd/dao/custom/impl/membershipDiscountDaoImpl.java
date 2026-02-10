@@ -26,6 +26,14 @@ public class membershipDiscountDaoImpl implements membershipDiscountDao {
 
     @Override
     public membershipDiscountEntity search(String id) throws Exception {
+        String sql = "SELECT * FROM membership_tier WHERE tier_id = ?";
+        ResultSet rst = CRUDUtil.executeQuery(sql, id);
+
+        if (rst.next()) {
+            return new membershipDiscountEntity(rst.getString("tier_id"), rst.getString("tier_name"),
+                    rst.getFloat("discount"), rst.getFloat("max_deposit"));
+        }
+
         return null;
     }
 

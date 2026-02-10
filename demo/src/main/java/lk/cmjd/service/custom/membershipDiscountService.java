@@ -8,4 +8,6 @@ public interface membershipDiscountService extends superService {
     public ArrayList<membershipDiscountDto> getAll() throws Exception;
 
     public boolean assign(String name, float discount, float maxDep) throws Exception;
+
+    public membershipDiscountDto search(String id) throws Exception;
 }

@@ -82,14 +82,8 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="cbxBranch" layoutX="279.0" layoutY="396.0" prefWidth="150.0" promptText="Branch" />
-                  <DatePicker fx:id="dateStart" layoutX="278.0" layoutY="446.0" prefHeight="26.0" prefWidth="151.0" />
-                  <Label layoutX="231.0" layoutY="448.0" text="Start">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dateEnd" layoutX="487.0" layoutY="446.0" prefHeight="26.0" prefWidth="150.0" />
-                  <Label layoutX="454.0" layoutY="449.0" text="End">
+                  <DatePicker fx:id="dateDue" layoutX="487.0" layoutY="446.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Label layoutX="454.0" layoutY="449.0" text="Due">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

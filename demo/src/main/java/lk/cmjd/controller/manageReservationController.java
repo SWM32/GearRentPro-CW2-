@@ -4,7 +4,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -35,6 +34,7 @@ import lk.cmjd.service.serviceFactory.serviceType;
 import lk.cmjd.service.custom.manageBranchService;
 import lk.cmjd.service.custom.manageEquipmentService;
 import lk.cmjd.service.custom.manageReservationService;
+import lk.cmjd.util.rentalUtil;
 import lk.cmjd.util.sessionUtil;
 
 public class manageReservationController implements Initializable {
@@ -216,11 +216,11 @@ public class manageReservationController implements Initializable {
 
         dateStart.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                startDateValidation();
+                rentalUtil.startDateValidation(dateStart);
             }
 
             if (dateEnd.getValue() != null) {
-                endDateValidation();
+                rentalUtil.endDateValidation(dateStart.getValue(), dateEnd);
             }
         });
 
@@ -233,7 +233,7 @@ public class manageReservationController implements Initializable {
                     alert.show();
                     dateEnd.setValue(null);
                 } else {
-                    endDateValidation();
+                    rentalUtil.endDateValidation(dateStart.getValue(), dateEnd);
                 }
             }
         });
@@ -285,7 +285,8 @@ public class manageReservationController implements Initializable {
 
             reservationDto dto = new reservationDto(rsid, cusid, eid, bid, reservationDate, startDate, endDate, status);
 
-            if (dateOverlapValidation()) {
+            if (rentalUtil.ReserDateOverlapValidation(startDate, endDate, eid)
+                    && rentalUtil.RentalDateOverlapValidation(startDate, endDate, eid)) {
                 try {
                     Connection connection = DBConnection.getInstance().getConnection();
 
@@ -343,9 +344,11 @@ public class manageReservationController implements Initializable {
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Fail");
+                    alert.setContentText(e.getMessage());
+                    alert.show();
                 }
-
             }
         });
 
@@ -418,7 +421,10 @@ public class manageReservationController implements Initializable {
                     connection.setAutoCommit(true);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Fail");
+                alert.setContentText(e.getMessage());
+                alert.show();
             }
         });
 
@@ -434,7 +440,8 @@ public class manageReservationController implements Initializable {
 
             reservationDto dto = new reservationDto(rsid, cusid, eid, bid, reservationDate, startDate, endDate, status);
 
-            if (dateOverlapValidation()) {
+            if (rentalUtil.ReserDateOverlapValidation(startDate, endDate, eid)
+                    && rentalUtil.RentalDateOverlapValidation(startDate, endDate, eid)) {
                 try {
                     boolean success = reservationService.update(dto);
                     if (!success) {
@@ -646,100 +653,6 @@ public class manageReservationController implements Initializable {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    public void startDateValidation() {
-        LocalDate today = LocalDate.now();
-        LocalDate new_start = dateStart.getValue();
-
-        if (new_start == null) {
-            return;
-        }
-
-        if (!new_start.isAfter(today)) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Invalid Starting Date");
-            alert.show();
-
-            dateStart.setValue(null);
-        }
-    }
-
-    public void endDateValidation() {
-        LocalDate new_start = dateStart.getValue();
-        LocalDate new_end = dateEnd.getValue();
-
-        if (new_start == null || new_end == null) {
-            return;
-        }
-
-        if (new_end.compareTo(new_start) >= 0) {
-            long daysBetween = ChronoUnit.DAYS.between(new_start, new_end);
-            if (daysBetween > 30) {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Rental Gap should be <= 30 Days");
-                alert.show();
-
-                dateEnd.setValue(null);
-            }
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Invalid End Date");
-            alert.show();
-
-            dateEnd.setValue(null);
-        }
-    }
-
-    private boolean dateOverlapValidation() {
-        LocalDate new_start = dateStart.getValue();
-        LocalDate new_end = dateEnd.getValue();
-        String res_eq_id = cbxEquipment.getValue().getEquipment_id();
-
-        if (new_start == null || res_eq_id == null) {
-            return false;
-        }
-
-        for (manageReservationTM res : tblReservationData.getItems()) {
-            LocalDate exist_start = res.getStart_date();
-            LocalDate exist_end = res.getEnd_date();
-
-            if (res.getEquipment_id().equals(res_eq_id)) {
-                if (new_start.isBefore(exist_start)) {
-                    if (new_end.isAfter(exist_start)) {
-                        Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setContentText(
-                                "Reservation Overlap with Existing reservation (" + res.getReservation_id() + ")");
-                        alert.show();
-
-                        return false;
-                    }
-                } else if (new_start.isAfter(exist_start)) {
-                    if (exist_end.isAfter(new_start)) {
-                        Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setContentText(
-                                "Reservation Overlap with Existing reservation (" + res.getReservation_id() + ")");
-                        alert.show();
-
-                        return false;
-                    }
-                } else if (new_start.compareTo(exist_start) == 0) {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setContentText(
-                            "Reservation Overlap with Existing reservation (" + res.getReservation_id() + ")");
-                    alert.show();
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 
     private void loadBranches() {

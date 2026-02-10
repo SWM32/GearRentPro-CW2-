@@ -31,4 +31,16 @@ public class membershipDiscountServiceImpl implements membershipDiscountService 
         return dao.assign(name, discount, maxDep);
     }
 
+    @Override
+    public membershipDiscountDto search(String id) throws Exception {
+        membershipDiscountEntity entity = dao.search(id);
+
+        if (entity != null) {
+            return new membershipDiscountDto(entity.getTierId(), entity.getTiername(),
+                    entity.getDiscount(), entity.getMaxDep());
+        }
+
+        return null;
+    }
+
 }
