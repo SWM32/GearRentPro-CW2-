@@ -50,16 +50,7 @@ public class manageRentalController implements Initializable {
         private Button btnAdd;
 
         @FXML
-        private Button btnCancel;
-
-        @FXML
         private Button btnClear;
-
-        @FXML
-        private Button btnSearch;
-
-        @FXML
-        private Button btnUpdate;
 
         @FXML
         private ComboBox<branchDto> cbxBranch;
@@ -333,7 +324,7 @@ public class manageRentalController implements Initializable {
                                         due_date, actual_return_date, total_rent, sdh, mdh, lrd, final_pay,
                                         payment_status, rental_status);
 
-                        if ((!eqStatus.equals("RENTED") || !eqStatus.equals("MAINTENANCE"))
+                        if (!(eqStatus.equals("RENTED") || eqStatus.equals("MAINTENANCE"))
                                         && cusDeposit <= maxDeposit
                                         && rentalUtil.RentalDateOverlapValidation(start_date, due_date, equipment_id)
                                         && rentalUtil.ReserDateOverlapValidation(start_date, due_date, equipment_id)) {

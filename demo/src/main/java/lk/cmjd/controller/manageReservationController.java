@@ -1,5 +1,6 @@
 package lk.cmjd.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 import lk.cmjd.db.DBConnection;
 import lk.cmjd.dto.branchDto;
@@ -40,6 +43,9 @@ import lk.cmjd.util.sessionUtil;
 public class manageReservationController implements Initializable {
 
     @FXML
+    private AnchorPane ancrDisplay;
+
+    @FXML
     private Button btnAdd;
 
     @FXML
@@ -53,6 +59,9 @@ public class manageReservationController implements Initializable {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private Button btnConRen;
 
     @FXML
     private ComboBox<branchDto> cbxBranch;
@@ -513,6 +522,8 @@ public class manageReservationController implements Initializable {
         });
 
         btnClear.setOnAction(event -> clearForm());
+
+        btnConRen.setOnAction((event) -> loadContent("/lk/cmjd/ResToRen.fxml"));
     }
 
     public void ResTableSetup() {
@@ -732,6 +743,18 @@ public class manageReservationController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    private void loadContent(String file) {
+        AnchorPane displayPane = null;
+        try {
+            displayPane = FXMLLoader.load(getClass().getResource(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ancrDisplay.getChildren().clear();
+        ancrDisplay.getChildren().add(displayPane);
     }
 
     public void clearForm() {

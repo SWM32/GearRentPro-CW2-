@@ -102,4 +102,9 @@ public class manageRentalServiceImpl implements manageRentalService {
         return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
     }
 
+    @Override
+    public String getLastID() throws Exception {
+        return dao.getLastID();
+    }
+
 }

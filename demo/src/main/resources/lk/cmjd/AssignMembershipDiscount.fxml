@@ -19,7 +19,7 @@
          </columns>
       </TableView>
       <TextField fx:id="txtDiscount" layoutX="454.0" layoutY="328.0" prefHeight="26.0" prefWidth="136.0" promptText="15" />
-      <Label layoutX="66.0" layoutY="331.0" text="Membership Tier">
+      <Label layoutX="64.0" layoutY="331.0" text="Membership Tier">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

@@ -82,4 +82,16 @@ public class manageRentalDaoImpl implements manageRentalDao {
         return rentalEntities;
     }
 
+    @Override
+    public String getLastID() throws Exception {
+        String sql = "SELECT rental_id FROM rental ORDER BY LENGTH(rental_id) DESC, rental_id DESC LIMIT 1";
+        ResultSet rst = CRUDUtil.executeQuery(sql);
+
+        if (rst.next()) {
+            return rst.getString("rental_id");
+        }
+
+        return null;
+    }
+
 }

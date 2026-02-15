@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancrDisplay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.resToRenController">
+   <children>
+      <AnchorPane prefHeight="500.0" prefWidth="655.0">
+         <children>
+            <TextField fx:id="txtResSearchbar" layoutX="18.0" layoutY="20.0" promptText="Search Reservation" />
+            <ScrollPane layoutX="18.0" layoutY="56.0" prefHeight="200.0" prefWidth="620.0">
+               <content>
+                  <TableView fx:id="tblReservationData" prefHeight="200.0" prefWidth="810.0">
+                     <columns>
+                        <TableColumn fx:id="colResRSID" prefWidth="85.0" text="RSID" />
+                        <TableColumn fx:id="colResCusID" prefWidth="85.0" text="CusID" />
+                        <TableColumn fx:id="colResEID" prefWidth="85.0" text="EID" />
+                        <TableColumn fx:id="colResBID" prefWidth="100.0" text="BID" />
+                        <TableColumn fx:id="colResDate" prefWidth="120.0" text="Res Date" />
+                        <TableColumn fx:id="colResStart" prefWidth="120.0" text="Start" />
+                        <TableColumn fx:id="colResEnd" prefWidth="120.0" text="End" />
+                        <TableColumn fx:id="colResStatus" minWidth="5.60009765625" prefWidth="100.0" text="Status" />
+                     </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+            <TextField fx:id="txtRSID" layoutX="56.0" layoutY="333.0" prefHeight="26.0" prefWidth="94.0" promptText="RS001" />
+            <Label layoutX="14.0" layoutY="336.0" text="RSID">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnConvert" layoutX="580.0" layoutY="444.0" mnemonicParsing="false" text="Convert" />
+            <Button fx:id="btnMngRes" layoutX="508.0" layoutY="20.0" mnemonicParsing="false" text="Manage Reservations" />
+            <Label layoutX="373.0" layoutY="389.0" text="Payment Status">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbxPayStatus" layoutX="492.0" layoutY="386.0" prefHeight="26.0" prefWidth="150.0" promptText="Payment Status" />
+            <Label layoutX="14.0" layoutY="389.0" text="Rental Status">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbxRentStatus" layoutX="123.0" layoutY="386.0" prefHeight="26.0" prefWidth="150.0" promptText="Rental Status" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

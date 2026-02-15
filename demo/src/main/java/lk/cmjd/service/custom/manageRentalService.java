@@ -21,4 +21,6 @@ public interface manageRentalService extends superService {
 
     public float totalRent(equipmentDto eq, itemCategoryDto cat, LocalDate start_date, LocalDate due_date)
             throws Exception;
+
+    public String getLastID() throws Exception;
 }
