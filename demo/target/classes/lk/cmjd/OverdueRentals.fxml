@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancrDisplay" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.overdueRentalsController">
+   <children>
+      <TextField fx:id="txtSearchbar" layoutX="18.0" layoutY="36.0" promptText="Search" />
+      <ScrollPane layoutX="18.0" layoutY="74.0" prefHeight="300.0" prefWidth="620.0">
+         <content>
+            <TableView fx:id="tblData" prefHeight="300.0" prefWidth="685.0">
+               <columns>
+                  <TableColumn fx:id="colCID" prefWidth="85.0" text="CID" />
+                  <TableColumn fx:id="colBID" prefWidth="85.0" text="BID" />
+                  <TableColumn fx:id="colEID" prefWidth="85.0" text="EID" />
+                  <TableColumn fx:id="colDue" prefWidth="100.0" text="Due" />
+                  <TableColumn fx:id="colOverdueDays" prefWidth="120.0" text="Days Overdue" />
+                  <TableColumn fx:id="colContact" prefWidth="100.0" text="Contact" />
+                  <TableColumn fx:id="colEmail" prefWidth="160.0" text="Email" />
+               </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <Button fx:id="btnMngRentals" layoutX="536.0" layoutY="36.0" mnemonicParsing="false" text="Manage Rentals" />
+      <Label layoutX="154.0" layoutY="409.0" text="Contact :">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="362.0" layoutY="410.0" text="Email :">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblContact" layoutX="233.0" layoutY="410.0" text="---">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEmail" layoutX="421.0" layoutY="410.0" text="---">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="410.0" text="CID : ">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCID" layoutX="61.0" layoutY="410.0" text="---">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

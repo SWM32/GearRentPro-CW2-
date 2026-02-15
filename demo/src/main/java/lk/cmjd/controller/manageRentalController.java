@@ -1,5 +1,6 @@
 package lk.cmjd.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.util.StringConverter;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -23,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import lk.cmjd.db.DBConnection;
 import lk.cmjd.dto.branchDto;
 import lk.cmjd.dto.customerDto;
@@ -46,10 +49,16 @@ import lk.cmjd.util.sessionUtil;
 public class manageRentalController implements Initializable {
 
         @FXML
+        private AnchorPane ancrDisplay;
+
+        @FXML
         private Button btnAdd;
 
         @FXML
         private Button btnClear;
+
+        @FXML
+        private Button btnOverdue;
 
         @FXML
         private ComboBox<branchDto> cbxBranch;
@@ -423,6 +432,10 @@ public class manageRentalController implements Initializable {
 
                 });
 
+                btnClear.setOnAction(event -> clearForm());
+
+                btnOverdue.setOnAction((event) -> loadContent("/lk/cmjd/OverdueRentals.fxml"));
+
         }
 
         public void EqTableSetup() {
@@ -628,7 +641,8 @@ public class manageRentalController implements Initializable {
                         ArrayList<rentalDto> dtos = rentalService.getAll();
 
                         for (rentalDto dto : dtos) {
-                                if (dto.getDue_date().isBefore(LocalDate.now())) {
+                                if (dto.getRental_status().equals("ACTIVE")
+                                                && dto.getDue_date().isBefore(LocalDate.now())) {
                                         rentalDto newRenDto = new rentalDto(
                                                         dto.getRental_id(), dto.getCustomer_id(), dto.getEquipment_id(),
                                                         dto.getBranch_id(),
@@ -692,6 +706,18 @@ public class manageRentalController implements Initializable {
                         e.printStackTrace();
                 }
 
+        }
+
+        private void loadContent(String file) {
+                AnchorPane displayPane = null;
+                try {
+                        displayPane = FXMLLoader.load(getClass().getResource(file));
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+
+                ancrDisplay.getChildren().clear();
+                ancrDisplay.getChildren().add(displayPane);
         }
 
         public void clearForm() {
