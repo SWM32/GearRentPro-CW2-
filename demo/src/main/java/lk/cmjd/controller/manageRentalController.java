@@ -39,7 +39,6 @@ import lk.cmjd.service.custom.manageBranchService;
 import lk.cmjd.service.custom.manageCustomerService;
 import lk.cmjd.service.custom.manageEquipmentService;
 import lk.cmjd.service.custom.manageRentalService;
-import lk.cmjd.service.custom.manageReservationService;
 import lk.cmjd.service.custom.membershipDiscountService;
 import lk.cmjd.util.rentalUtil;
 import lk.cmjd.util.sessionUtil;
@@ -169,14 +168,12 @@ public class manageRentalController implements Initializable {
         private manageRentalService rentalService = (manageRentalService) serviceFactory.getInstance()
                         .getService(serviceType.MANAGE_RENTAL);
 
-        private manageReservationService reservationService = (manageReservationService) serviceFactory.getInstance()
-                        .getService(serviceType.MANAGE_RESERVATION);
-
         private manageCustomerService customerService = (manageCustomerService) serviceFactory.getInstance()
                         .getService(serviceType.MANAGE_CUSTOMER);
 
         @Override
         public void initialize(URL arg0, ResourceBundle arg1) {
+                updateRentalStatus();
                 RenTableSetup();
                 EqTableSetup();
                 loadBranches();
@@ -523,7 +520,8 @@ public class manageRentalController implements Initializable {
                         for (rentalDto dto : dtos) {
                                 obList.add(new manageRentalTM(dto.getRental_id(), dto.getCustomer_id(),
                                                 dto.getEquipment_id(), dto.getBranch_id(), dto.getStart_date(),
-                                                dto.getDue_date(), dto.getActual_return_date(), dto.getTotal_rent(),
+                                                dto.getDue_date(), dto.getActual_return_date(),
+                                                dto.getTotal_rent(),
                                                 dto.getSdh(), dto.getMdh(), dto.getLrd(), dto.getFinal_pay(),
                                                 dto.getPayment_status(), dto.getRental_status()));
                         }
@@ -618,6 +616,35 @@ public class manageRentalController implements Initializable {
 
                         });
 
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+
+        }
+
+        private void updateRentalStatus() {
+
+                try {
+                        ArrayList<rentalDto> dtos = rentalService.getAll();
+
+                        for (rentalDto dto : dtos) {
+                                if (dto.getDue_date().isBefore(LocalDate.now())) {
+                                        rentalDto newRenDto = new rentalDto(
+                                                        dto.getRental_id(), dto.getCustomer_id(), dto.getEquipment_id(),
+                                                        dto.getBranch_id(),
+                                                        dto.getStart_date(), dto.getDue_date(),
+                                                        dto.getActual_return_date(),
+                                                        dto.getTotal_rent(), dto.getSdh(), dto.getMdh(), dto.getLrd(),
+                                                        dto.getFinal_pay(),
+                                                        dto.getPayment_status(), "OVERDUE");
+
+                                        try {
+                                                rentalService.update(newRenDto);
+                                        } catch (Exception e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                        }
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
