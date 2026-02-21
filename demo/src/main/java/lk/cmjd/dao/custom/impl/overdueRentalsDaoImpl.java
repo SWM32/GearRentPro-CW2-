@@ -33,7 +33,7 @@ public class overdueRentalsDaoImpl implements overdueRentalsDao {
     public ArrayList<overdueEntity> getAll() throws Exception {
         ArrayList<overdueEntity> entities = new ArrayList<>();
 
-        String sql = "SELECT rental.customer_id, rental.branch_id, rental.equipment_id, rental.due_date, DATEDIFF(CURDATE(), rental.due_date) AS overdue_days, customer.contact, customer.email FROM rental, customer WHERE rental.customer_id = customer.customer_id AND CURDATE() > rental.due_date";
+        String sql = "SELECT rental.customer_id, rental.branch_id, rental.equipment_id, rental.due_date, DATEDIFF(CURDATE(), rental.due_date) AS overdue_days, customer.contact, customer.email FROM rental, customer WHERE rental.customer_id = customer.customer_id AND rental.rental_status = 'OVERDUE'";
         ResultSet rst = CRUDUtil.executeQuery(sql);
 
         while (rst.next()) {

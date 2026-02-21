@@ -39,13 +39,24 @@ public class manageRentalDaoImpl implements manageRentalDao {
         ResultSet rst = CRUDUtil.executeQuery(sql, id);
 
         if (rst.next()) {
-            return new rentalEntity(rst.getString("rental_id"), rst.getString("customer_id"),
-                    rst.getString("equipment_id"), rst.getString("branch_id"),
-                    rst.getDate("start_date").toLocalDate(), rst.getDate("due_date").toLocalDate(),
-                    rst.getDate("actual_return_date").toLocalDate(), rst.getFloat("total_rental_cost"),
-                    rst.getFloat("security_deposit_held"), rst.getFloat("membership_discount_amount"),
-                    rst.getFloat("long_rental_discount_amount"), rst.getFloat("final_payable_amount"),
-                    rst.getString("payment_status"), rst.getString("rental_status"));
+            if (rst.getDate("actual_return_date") != null) {
+                return new rentalEntity(rst.getString("rental_id"), rst.getString("customer_id"),
+                        rst.getString("equipment_id"), rst.getString("branch_id"),
+                        rst.getDate("start_date").toLocalDate(), rst.getDate("due_date").toLocalDate(),
+                        rst.getDate("actual_return_date").toLocalDate(), rst.getFloat("total_rental_cost"),
+                        rst.getFloat("security_deposit_held"), rst.getFloat("membership_discount_amount"),
+                        rst.getFloat("long_rental_discount_amount"), rst.getFloat("final_payable_amount"),
+                        rst.getString("payment_status"), rst.getString("rental_status"));
+            } else {
+                return new rentalEntity(rst.getString("rental_id"), rst.getString("customer_id"),
+                        rst.getString("equipment_id"), rst.getString("branch_id"),
+                        rst.getDate("start_date").toLocalDate(), rst.getDate("due_date").toLocalDate(),
+                        null, rst.getFloat("total_rental_cost"),
+                        rst.getFloat("security_deposit_held"), rst.getFloat("membership_discount_amount"),
+                        rst.getFloat("long_rental_discount_amount"), rst.getFloat("final_payable_amount"),
+                        rst.getString("payment_status"), rst.getString("rental_status"));
+            }
+
         }
 
         return null;

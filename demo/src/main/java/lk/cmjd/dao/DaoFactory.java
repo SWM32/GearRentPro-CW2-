@@ -8,6 +8,7 @@ import lk.cmjd.dao.custom.impl.manageCustomerDaoImpl;
 import lk.cmjd.dao.custom.impl.manageEquipmentDaoImpl;
 import lk.cmjd.dao.custom.impl.manageRentalDaoImpl;
 import lk.cmjd.dao.custom.impl.manageReservationDaoImpl;
+import lk.cmjd.dao.custom.impl.manageReturnDaoImpl;
 import lk.cmjd.dao.custom.impl.membershipDiscountDaoImpl;
 import lk.cmjd.dao.custom.impl.overdueRentalsDaoImpl;
 import lk.cmjd.dao.custom.impl.signUpDaoImpl;
@@ -28,7 +29,7 @@ public class DaoFactory {
 
     public static enum DaoTypes {
         LOGIN, SIGNUP, MANAGE_BRANCH, ASSIGN_BRANCH, MEMBERSHIP_DISCOUNT, ITEM_CATEGORY, MANAGE_EQUIPMENT,
-        MANAGE_CUSTOMER, MANAGE_RESERVATION, MANAGE_RENTAL, OVERDUE_RENTALS
+        MANAGE_CUSTOMER, MANAGE_RESERVATION, MANAGE_RENTAL, OVERDUE_RENTALS, MANAGE_RETURN
     }
 
     public SuperDao getDao(DaoTypes type) {
@@ -55,6 +56,8 @@ public class DaoFactory {
                 return new manageRentalDaoImpl();
             case OVERDUE_RENTALS:
                 return new overdueRentalsDaoImpl();
+            case MANAGE_RETURN:
+                return new manageReturnDaoImpl();
             default:
                 throw new AssertionError();
         }

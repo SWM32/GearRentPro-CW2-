@@ -48,6 +48,9 @@ public class mainController implements Initializable {
     private Button btnMngRental;
 
     @FXML
+    private Button btnMngReturn;
+
+    @FXML
     private Button btnLogout;
 
     @FXML
@@ -61,7 +64,7 @@ public class mainController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         menuButtons = new ArrayList<>(Arrays.asList(btnHome, btnMngBranch, btnMngMembership, btnMngCategory,
-                btnMngEquipment, btnMngCustomer, btnMngReservation, btnMngRental));
+                btnMngEquipment, btnMngCustomer, btnMngReservation, btnMngRental, btnMngReturn));
 
         btnLogout.setOnAction(
                 event -> {
@@ -107,6 +110,11 @@ public class mainController implements Initializable {
         btnMngRental.setOnAction(event -> {
             updateActiveState(btnMngRental);
             loadContent("/lk/cmjd/ManageRental.fxml");
+        });
+
+        btnMngReturn.setOnAction(event -> {
+            updateActiveState(btnMngReturn);
+            loadContent("/lk/cmjd/ManageReturn.fxml");
         });
 
         updateActiveState(btnHome);
@@ -162,6 +170,9 @@ public class mainController implements Initializable {
         btnMngRental.setVisible(false);
         btnMngRental.setManaged(false);
 
+        btnMngReturn.setVisible(false);
+        btnMngReturn.setManaged(false);
+
         if (role.equalsIgnoreCase("Admin")) {
             btnMngBranch.setVisible(true);
             btnMngBranch.setManaged(true);
@@ -192,6 +203,9 @@ public class mainController implements Initializable {
 
                 btnMngRental.setVisible(true);
                 btnMngRental.setManaged(true);
+
+                btnMngReturn.setVisible(true);
+                btnMngReturn.setManaged(true);
             }
 
             btnMngCategory.setVisible(true);
@@ -207,6 +221,9 @@ public class mainController implements Initializable {
 
             btnMngRental.setVisible(true);
             btnMngRental.setManaged(true);
+
+            btnMngReturn.setVisible(true);
+            btnMngReturn.setManaged(true);
         }
     }
 }
