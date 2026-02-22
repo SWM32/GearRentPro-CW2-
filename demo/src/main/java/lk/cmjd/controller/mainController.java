@@ -74,7 +74,7 @@ public class mainController implements Initializable {
 
         btnHome.setOnAction(event -> {
             updateActiveState(btnHome);
-            ancrDisplay.getChildren().clear();
+            loadContent("/lk/cmjd/branchReport.fxml");
         });
 
         btnMngBranch.setOnAction(event -> {
@@ -146,6 +146,7 @@ public class mainController implements Initializable {
         sessionUtil.getSession().setBranch(branch);
         sessionUtil.getSession().setRole(role);
         setUpMenu();
+        setUpMainAncrDisplay();
     }
 
     public void setUpMenu() {
@@ -225,5 +226,9 @@ public class mainController implements Initializable {
             btnMngReturn.setVisible(true);
             btnMngReturn.setManaged(true);
         }
+    }
+
+    public void setUpMainAncrDisplay() {
+        loadContent("/lk/cmjd/branchReport.fxml");
     }
 }

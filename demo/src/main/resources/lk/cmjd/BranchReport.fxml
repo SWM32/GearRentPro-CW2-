@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="ancrDisplay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.cmjd.controller.branchReportController">
+   <children>
+      <ScrollPane prefHeight="500.0" prefWidth="655.0">
+         <content>
+            <AnchorPane prefHeight="500.0" prefWidth="655.0">
+               <children>
+                  <TextField fx:id="txtBranchSearchbar" layoutX="18.0" layoutY="20.0" promptText="Search Branch" />
+                  <ScrollPane layoutX="18.0" layoutY="56.0" prefHeight="200.0" prefWidth="620.0">
+                     <content>
+                        <TableView fx:id="tblData" prefHeight="200.0" prefWidth="620.0">
+                           <columns>
+                              <TableColumn fx:id="colBID" prefWidth="85.0" text="BID" />
+                              <TableColumn fx:id="colName" prefWidth="85.0" text="Name" />
+                              <TableColumn fx:id="colRentals" prefWidth="100.0" text="No. Of Rentals" />
+                              <TableColumn fx:id="colRevenue" prefWidth="100.0" text="Total Revenue" />
+                              <TableColumn fx:id="colLateFee" prefWidth="105.0" text="Total Late Fees" />
+                              <TableColumn fx:id="colDamage" prefWidth="128.0" text="Total Damage Charge" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+                  <Label layoutX="18.0" layoutY="275.0" text="BID">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbxBranch" layoutX="50.0" layoutY="272.0" prefWidth="150.0" promptText="Branch" />
+                  <DatePicker fx:id="dateEnd" layoutX="486.0" layoutY="272.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Label layoutX="453.0" layoutY="275.0" text="End">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnCalculate" layoutX="18.0" layoutY="432.0" mnemonicParsing="false" text="Calculate" />
+                  <Button fx:id="btnClear" layoutX="104.0" layoutY="432.0" mnemonicParsing="false" text="Clear" />
+                  <Button fx:id="btnEquipmentReport" layoutX="523.0" layoutY="20.0" mnemonicParsing="false" text="Equipment Report" />
+                  <DatePicker fx:id="dateStart" layoutX="265.0" layoutY="271.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Label layoutX="226.0" layoutY="274.0" text="Start">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="18.0" layoutY="349.0" text="Revenue For The Period :">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblRP" layoutX="199.0" layoutY="349.0" text="---">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

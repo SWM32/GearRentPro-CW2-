@@ -241,7 +241,7 @@ public class manageReturnController implements Initializable {
                 e.printStackTrace();
             }
 
-            if (rentaldto == null) {
+            if (rentaldto == null || rentaldto.getRental_status().equals("RETURNED")) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Not Found");
                 alert.setContentText("Invalid Rental ID");
@@ -276,7 +276,7 @@ public class manageReturnController implements Initializable {
                 e.printStackTrace();
             }
 
-            if (rentaldto == null) {
+            if (rentaldto == null || rentaldto.getRental_status().equals("RETURNED")) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Not Found");
                 alert.setContentText("Invalid Rental ID");
