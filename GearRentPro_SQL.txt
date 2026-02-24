@@ -4,7 +4,7 @@ CREATE TABLE branch(
   branch_id VARCHAR(10) NOT NULL PRIMARY KEY,
   name VARCHAR(45) NULL,
   address VARCHAR(50) NULL,
-  contact VARCHAR(15) NULL,
+  contact VARCHAR(15) NULL
 );
 
 CREATE TABLE user (
@@ -82,7 +82,7 @@ CREATE TABLE reservation(
 CREATE TABLE customer_deposit(
   customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
   deposit_amount float(10),
-  FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+  FOREIGN KEY(customer_id) REFERENCES customer(customer_id)
 );
 
 CREATE TABLE rental(
@@ -115,6 +115,101 @@ CREATE TABLE rental_return(
   FOREIGN KEY(rental_id) REFERENCES rental(rental_id)
 );
 
+
+-- Data Insert
+
+INSERT INTO branch (branch_id, name, address, contact) VALUES
+('B_001', 'Colombo HQ', '123 Galle Road, Colombo 03', '0112345678'),
+('B_002', 'Kandy Branch', '45 Dalada Vidiya, Kandy', '0812345678'),
+('B_003', 'Galle Fort Branch', '12 Pedlar St, Galle', '0912345678');
+
+INSERT INTO user (user_id, username, password, role, branch_id) VALUES
+('U_001', 'admin_colombo', 'hashed_pw_1', 'ADMIN', 'B_001'),
+('U_002', 'staff_kandy', 'hashed_pw_2', 'STAFF', 'B_002'),
+('U_003', 'mgr_galle', 'hashed_pw_3', 'MANAGER', 'B_003');
+
+
+INSERT INTO equipment_category (category_id, name, description, base_price_factor, weekend_multiplier, long_rental_discount_rate, default_late_fee_per_day) VALUES
+('CAT_01', 'Cameras', 'DSLR and Mirrorless bodies', 1.0, 1.2, 0.1, 1500),
+('CAT_02', 'Lenses', 'Prime and Zoom lenses', 0.8, 1.2, 0.1, 1000),
+('CAT_03', 'Lighting', 'Flashes, Strobes, Continuous', 0.5, 1.1, 0.15, 500),
+('CAT_04', 'Audio', 'Microphones and recorders', 0.4, 1.0, 0.15, 300),
+('CAT_05', 'Drones', 'Aerial photography drones', 1.5, 1.5, 0.05, 3000);
+
+
+INSERT INTO equipment (equipment_id, branch_id, category_id, brand, model, purchase_year, base_daily_price, security_deposit_amount, status) VALUES
+('E_001', 'B_001', 'CAT_01', 'Sony', 'A7 III', 2021, 3500, 50000, 'AVAILABLE'),
+('E_002', 'B_001', 'CAT_01', 'Canon', 'EOS R5', 2022, 6000, 100000, 'RENTED'),
+('E_003', 'B_002', 'CAT_01', 'Sony', 'A7 IV', 2023, 4500, 75000, 'RESERVED'),
+('E_004', 'B_003', 'CAT_01', 'Nikon', 'Z6 II', 2021, 3500, 50000, 'AVAILABLE'),
+('E_005', 'B_001', 'CAT_01', 'Fuji', 'X-T4', 2020, 3000, 40000, 'MAINTENANCE'),
+('E_006', 'B_001', 'CAT_02', 'Sony', '24-70mm f/2.8', 2021, 2000, 30000, 'RENTED'),
+('E_007', 'B_002', 'CAT_02', 'Canon', '70-200mm f/2.8', 2019, 2500, 40000, 'AVAILABLE'),
+('E_008', 'B_003', 'CAT_02', 'Sigma', '35mm f/1.4', 2020, 1500, 20000, 'AVAILABLE'),
+('E_009', 'B_001', 'CAT_02', 'Sony', '85mm f/1.8', 2022, 1200, 15000, 'AVAILABLE'),
+('E_010', 'B_002', 'CAT_02', 'Canon', '50mm f/1.2', 2021, 2200, 35000, 'RESERVED'),
+('E_011', 'B_001', 'CAT_03', 'Godox', 'AD600 Pro', 2021, 1500, 20000, 'RENTED'),
+('E_012', 'B_002', 'CAT_03', 'Aputure', '120d II', 2020, 2000, 25000, 'AVAILABLE'),
+('E_013', 'B_003', 'CAT_03', 'Godox', 'SL60W', 2019, 800, 10000, 'AVAILABLE'),
+('E_014', 'B_001', 'CAT_03', 'Profoto', 'B10 Plus', 2022, 3500, 60000, 'MAINTENANCE'),
+('E_015', 'B_001', 'CAT_04', 'Rode', 'NTG4+', 2020, 1000, 15000, 'AVAILABLE'),
+('E_016', 'B_002', 'CAT_04', 'Zoom', 'H6', 2021, 800, 10000, 'RENTED'),
+('E_017', 'B_003', 'CAT_04', 'Sennheiser', 'G4 Wireless', 2022, 1500, 25000, 'AVAILABLE'),
+('E_018', 'B_001', 'CAT_05', 'DJI', 'Mavic 3', 2023, 5000, 100000, 'AVAILABLE'),
+('E_019', 'B_002', 'CAT_05', 'DJI', 'Mini 3 Pro', 2022, 2500, 40000, 'RENTED'),
+('E_020', 'B_003', 'CAT_05', 'DJI', 'Inspire 2', 2020, 8000, 150000, 'RESERVED'),
+('E_021', 'B_001', 'CAT_01', 'Sony', 'FX3', 2023, 7000, 120000, 'AVAILABLE');
+
+
+INSERT INTO customer (customer_id, name, nic_passport, contact, email, address, membership_tier_id, deposit) VALUES
+('C_001', 'Kamal Perera', '901234567V', '0771111111', 'kamal@gmail.com', 'Colombo 05', 'MT_1', 0),
+('C_002', 'Nimali Silva', '912345678V', '0772222222', 'nimali@gmail.com', 'Kandy', 'MT_2', 0),
+('C_003', 'Sunil Fernando', '853456789V', '0773333333', 'sunil@gmail.com', 'Galle', 'MT_3', 0),
+('C_004', 'Piyal de Silva', '951234567V', '0774444444', 'piyal@gmail.com', 'Nugegoda', 'MT_1', 0),
+('C_005', 'Amali Rathnayake', '962345678V', '0775555555', 'amali@gmail.com', 'Malabe', 'MT_2', 0),
+('C_006', 'Ruwan Kumara', '883456789V', '0776666666', 'ruwan@gmail.com', 'Dehiwala', 'MT_1', 0),
+('C_007', 'Kasun Bandara', '931234567V', '0777777777', 'kasun@gmail.com', 'Matara', 'MT_3', 0),
+('C_008', 'Sanduni Peiris', '982345678V', '0778888888', 'sanduni@gmail.com', 'Moratuwa', 'MT_1', 0),
+('C_009', 'Lahiru Senaratne', '923456789V', '0779999999', 'lahiru@gmail.com', 'Kottawa', 'MT_2', 0),
+('C_010', 'Dinesh Gunawardena', '891234567V', '0770000000', 'dinesh@gmail.com', 'Mount Lavinia', 'MT_1', 0);
+
+
+INSERT INTO customer_deposit (customer_id, deposit_amount) VALUES
+('C_001', 50000),
+('C_002', 150000),
+('C_003', 300000),
+('C_004', 25000),
+('C_005', 75000),
+('C_006', 0),
+('C_007', 500000),
+('C_008', 20000),
+('C_009', 100000),
+('C_010', 0);
+
+
+INSERT INTO reservation (reservation_id, customer_id, equipment_id, branch_id, reservation_date, start_date, end_date, status) VALUES
+('RES_01', 'C_001', 'E_003', 'B_002', '2026-02-20', '2026-03-01', '2026-03-05', 'PENDING'),    -- Future Booking
+('RES_02', 'C_003', 'E_010', 'B_002', '2026-02-22', '2026-03-10', '2026-03-12', 'PENDING'),    -- Future Booking
+('RES_03', 'C_005', 'E_020', 'B_003', '2026-02-24', '2026-02-28', '2026-03-02', 'PENDING'),    -- Future Booking
+('RES_04', 'C_002', 'E_001', 'B_001', '2026-01-10', '2026-01-15', '2026-01-20', 'COMPLETED'),  -- Past & Fulfilled
+('RES_05', 'C_008', 'E_004', 'B_003', '2026-02-01', '2026-02-05', '2026-02-07', 'CANCELLED');  -- Cancelled
+
+
+INSERT INTO rental (rental_id, customer_id, equipment_id, branch_id, start_date, due_date, actual_return_date, total_rental_cost, security_deposit_held, membership_discount_amount, long_rental_discount_amount, final_payable_amount, payment_status, rental_status) VALUES
+('REN_01', 'C_001', 'E_002', 'B_001', '2026-02-24', '2026-02-28', NULL, 24000, 100000, 0, 0, 24000, 'PAID', 'ACTIVE'),
+('REN_02', 'C_004', 'E_006', 'B_001', '2026-02-20', '2026-02-26', NULL, 12000, 30000, 0, 0, 12000, 'PAID', 'ACTIVE'),
+('REN_03', 'C_007', 'E_011', 'B_001', '2026-02-15', '2026-02-18', NULL, 4500, 20000, 450, 0, 4050, 'UNPAID', 'OVERDUE'),
+('REN_04', 'C_009', 'E_016', 'B_002', '2026-02-10', '2026-02-15', NULL, 4000, 10000, 0, 0, 4000, 'PARTIALLY_PAID', 'OVERDUE'),
+('REN_05', 'C_002', 'E_019', 'B_002', '2026-02-01', '2026-02-05', NULL, 10000, 40000, 500, 0, 9500, 'PAID', 'OVERDUE'),
+('REN_06', 'C_003', 'E_001', 'B_001', '2026-01-15', '2026-01-20', '2026-01-20', 17500, 50000, 1750, 0, 15750, 'PAID', 'RETURNED'),
+('REN_07', 'C_010', 'E_008', 'B_003', '2026-01-05', '2026-01-10', '2026-01-12', 7500, 20000, 0, 0, 7500, 'PAID', 'RETURNED'),
+('REN_08', 'C_005', 'E_015', 'B_001', '2026-01-10', '2026-01-12', '2026-01-12', 2000, 15000, 0, 0, 2000, 'PAID', 'RETURNED');
+
+
+INSERT INTO rental_return (rental_id, actual_return_date, damaged, late_fee, damage_description, damage_charge) VALUES
+('REN_06', '2026-01-20', FALSE, 0, NULL, 0),
+('REN_07', '2026-01-12', TRUE, 3000, 'Scratched front lens element', 15000),
+('REN_08', '2026-01-12', TRUE, 0, 'Broken microphone mounting clip', 2000);
 
 
 
