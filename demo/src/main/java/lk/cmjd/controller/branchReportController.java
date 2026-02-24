@@ -1,5 +1,6 @@
 package lk.cmjd.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.util.StringConverter;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -214,6 +216,8 @@ public class branchReportController implements Initializable {
         });
 
         btnClear.setOnAction(event -> clearForm());
+
+        btnEquipmentReport.setOnAction(event -> loadContent("/lk/cmjd/EquipmentReport.fxml"));
     }
 
     private void TableSetup() {
@@ -314,6 +318,18 @@ public class branchReportController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    private void loadContent(String file) {
+        AnchorPane displayPane = null;
+        try {
+            displayPane = FXMLLoader.load(getClass().getResource(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ancrDisplay.getChildren().clear();
+        ancrDisplay.getChildren().add(displayPane);
     }
 
     public void clearForm() {

@@ -75,8 +75,8 @@ public class rentalUtil {
                 LocalDate exist_end = res.getEnd_date();
 
                 if (res.getEquipment_id().equals(res_eq_id)) {
-                    if (new_start.isBefore(exist_start)) {
-                        if (new_end.isAfter(exist_start)) {
+                    if (!new_start.isAfter(exist_start)) {
+                        if (!new_end.isBefore(exist_start)) {
                             Alert alert = new Alert(AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setContentText(
@@ -85,8 +85,8 @@ public class rentalUtil {
 
                             return false;
                         }
-                    } else if (new_start.isAfter(exist_start)) {
-                        if (exist_end.isAfter(new_start)) {
+                    } else if (!new_start.isBefore(exist_start)) {
+                        if (!exist_end.isBefore(new_start)) {
                             Alert alert = new Alert(AlertType.ERROR);
                             alert.setTitle("Error");
                             alert.setContentText(
@@ -95,13 +95,6 @@ public class rentalUtil {
 
                             return false;
                         }
-                    } else if (new_start.compareTo(exist_start) == 0) {
-                        Alert alert = new Alert(AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setContentText(
-                                "Overlap with Existing reservation (" + res.getReservation_id() + ")");
-                        alert.show();
-                        return false;
                     }
                 }
             }

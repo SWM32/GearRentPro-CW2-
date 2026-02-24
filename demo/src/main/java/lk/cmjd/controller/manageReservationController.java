@@ -158,10 +158,10 @@ public class manageReservationController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        ResTableSetup();
-        EqTableSetup();
         loadBranches();
         loadEquipment();
+        ResTableSetup();
+        EqTableSetup();
 
         cbxStatus.getItems().addAll("PENDING", "COMPLETED", "CANCELLED");
 
@@ -537,13 +537,17 @@ public class manageReservationController implements Initializable {
         colResStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         try {
+            String branch = cbxBranch.getValue() != null ? cbxBranch.getValue().getBranchID() : null;
             ArrayList<reservationDto> dtos = reservationService.getAll();
 
             ObservableList<manageReservationTM> obList = FXCollections.observableArrayList();
             for (reservationDto dto : dtos) {
-                obList.add(new manageReservationTM(dto.getReservation_id(), dto.getCustomer_id(),
-                        dto.getEquipment_id(), dto.getBranch_id(), dto.getRevervation_date(), dto.getStart_date(),
-                        dto.getEnd_date(), dto.getStatus()));
+                if (branch == null || dto.getBranch_id().equals(branch)) {
+                    obList.add(new manageReservationTM(dto.getReservation_id(), dto.getCustomer_id(),
+                            dto.getEquipment_id(), dto.getBranch_id(), dto.getRevervation_date(), dto.getStart_date(),
+                            dto.getEnd_date(), dto.getStatus()));
+                }
+
             }
 
             FilteredList<manageReservationTM> filteredData = new FilteredList<>(obList, b -> true);

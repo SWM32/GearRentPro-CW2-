@@ -183,10 +183,10 @@ public class manageRentalController implements Initializable {
         @Override
         public void initialize(URL arg0, ResourceBundle arg1) {
                 updateRentalStatus();
-                RenTableSetup();
-                EqTableSetup();
                 loadBranches();
                 loadEquipment();
+                RenTableSetup();
+                EqTableSetup();
 
                 cbxPayStatus.getItems().addAll("PAID", "PARTIALLY_PAID", "UNPAID");
 
@@ -527,16 +527,19 @@ public class manageRentalController implements Initializable {
                 colRenRS.setCellValueFactory(new PropertyValueFactory<>("rental_status"));
 
                 try {
+                        String branch = cbxBranch.getValue() != null ? cbxBranch.getValue().getBranchID() : null;
                         ArrayList<rentalDto> dtos = rentalService.getAll();
 
                         ObservableList<manageRentalTM> obList = FXCollections.observableArrayList();
                         for (rentalDto dto : dtos) {
-                                obList.add(new manageRentalTM(dto.getRental_id(), dto.getCustomer_id(),
-                                                dto.getEquipment_id(), dto.getBranch_id(), dto.getStart_date(),
-                                                dto.getDue_date(), dto.getActual_return_date(),
-                                                dto.getTotal_rent(),
-                                                dto.getSdh(), dto.getMdh(), dto.getLrd(), dto.getFinal_pay(),
-                                                dto.getPayment_status(), dto.getRental_status()));
+                                if (branch == null || dto.getBranch_id().equals(branch)) {
+                                        obList.add(new manageRentalTM(dto.getRental_id(), dto.getCustomer_id(),
+                                                        dto.getEquipment_id(), dto.getBranch_id(), dto.getStart_date(),
+                                                        dto.getDue_date(), dto.getActual_return_date(),
+                                                        dto.getTotal_rent(),
+                                                        dto.getSdh(), dto.getMdh(), dto.getLrd(), dto.getFinal_pay(),
+                                                        dto.getPayment_status(), dto.getRental_status()));
+                                }
                         }
 
                         FilteredList<manageRentalTM> filteredData = new FilteredList<>(obList, b -> true);

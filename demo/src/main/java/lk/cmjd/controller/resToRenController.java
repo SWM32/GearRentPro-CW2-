@@ -40,6 +40,7 @@ import lk.cmjd.service.custom.manageEquipmentService;
 import lk.cmjd.service.custom.manageRentalService;
 import lk.cmjd.service.custom.manageReservationService;
 import lk.cmjd.service.custom.membershipDiscountService;
+import lk.cmjd.util.sessionUtil;
 
 public class resToRenController implements Initializable {
 
@@ -363,6 +364,8 @@ public class resToRenController implements Initializable {
         colResStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         try {
+            String sessionBranch = sessionUtil.getSession().getBranch();
+
             ArrayList<reservationDto> dtos = reservationService.getAll();
 
             ObservableList<manageReservationTM> obList = FXCollections.observableArrayList();
@@ -371,9 +374,13 @@ public class resToRenController implements Initializable {
 
             for (reservationDto dto : dtos) {
                 if (!dto.getStart_date().isAfter(today) && dto.getStatus().equals("PENDING")) {
-                    obList.add(new manageReservationTM(dto.getReservation_id(), dto.getCustomer_id(),
-                            dto.getEquipment_id(), dto.getBranch_id(), dto.getRevervation_date(), dto.getStart_date(),
-                            dto.getEnd_date(), dto.getStatus()));
+                    if (sessionBranch == null || dto.getBranch_id().equals(sessionBranch)) {
+                        obList.add(new manageReservationTM(dto.getReservation_id(), dto.getCustomer_id(),
+                                dto.getEquipment_id(), dto.getBranch_id(), dto.getRevervation_date(),
+                                dto.getStart_date(),
+                                dto.getEnd_date(), dto.getStatus()));
+                    }
+
                 }
             }
 
